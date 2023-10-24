@@ -6,26 +6,24 @@ using System.Web.Mvc;
 
 namespace Gestion_Proyectos.Controllers
 {
-    public class HomeController : Controller
+    public class ProyectoController : Controller
     {
-        public ActionResult Index()
+        // GET: Proyecto
+        public ActionResult VistaProyecto()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult VistaObjetivo()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult VistaActividad()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
-    
+        public ActionResult VistaTarea()
+        {
+            return View();
+        }
     }
 }

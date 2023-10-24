@@ -31,7 +31,7 @@
                 <li class="mx-2">@Html.ActionLink("Inicio", "Index", "Home")</li>
                 <li class="mx-2">@Html.ActionLink("Acerca de", "About", "Home")</li>
                 <li class="mx-2">@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                <li class="mx-2">@Html.ActionLink("Proyectos", "VistaProyecto", "Home")</li>
+                <li class="mx-2">@Html.ActionLink("Proyectos", "VistaProyecto", "Proyecto")</li>
             </ul>
             
         </div>
@@ -68,9 +68,9 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Objetivos</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Actividades</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Tareas</a>
+                                <a class="nav-link" href="@Url.Action("VistaObjetivo", "Proyecto")">Objetivos</a>
+                                <a class="nav-link" href="@Url.Action("VistaActividad", "Proyecto")">Actividades</a>
+                                <a class="nav-link" href="@Url.Action("VistaTarea", "Proyecto")">Tareas</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
