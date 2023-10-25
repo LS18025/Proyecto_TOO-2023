@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="base_proyectoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ACTIVIDAD">
+    <Key>
+      <PropertyRef Name="IDACTIVIDAD" />
+    </Key>
+    <Property Name="IDACTIVIDAD" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDPROYECTO" Type="Int32" />
+    <Property Name="NOMBREACT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPCIONACT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ASIGNACION_TAREA">
+    <Key>
+      <PropertyRef Name="IDASIGNACION" />
+    </Key>
+    <Property Name="IDASIGNACION" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="Int32" />
+    <Property Name="IDTAREA" Type="Int32" />
+  </EntityType>
+  <EntityType Name="OBJETIVO">
+    <Key>
+      <PropertyRef Name="IDOBJETIVO" />
+    </Key>
+    <Property Name="IDOBJETIVO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDPROYECTO" Type="Int32" />
+    <Property Name="DESCRIPCIONOBJ" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="PROYECTO">
+    <Key>
+      <PropertyRef Name="IDPROYECTO" />
+    </Key>
+    <Property Name="IDPROYECTO" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="Int32" />
+    <Property Name="NOMBREPROYECTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="FECHAINI" Type="DateTime" Precision="3" />
+    <Property Name="FECHAFIN" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TAREA">
+    <Key>
+      <PropertyRef Name="IDTAREA" />
+    </Key>
+    <Property Name="IDTAREA" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDACTIVIDAD" Type="Int32" />
+    <Property Name="NOMBRETAREA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPCIONT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FECHAINIT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FECHAFINT" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="APELLIDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CORREO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CONTRASENA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="base_proyectoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ACTIVIDAD" EntityType="Self.ACTIVIDAD" />
+    <EntitySet Name="ASIGNACION_TAREA" EntityType="Self.ASIGNACION_TAREA" />
+    <EntitySet Name="OBJETIVO" EntityType="Self.OBJETIVO" />
+    <EntitySet Name="PROYECTO" EntityType="Self.PROYECTO" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TAREA" EntityType="Self.TAREA" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+  </EntityContainer>
+</Schema>

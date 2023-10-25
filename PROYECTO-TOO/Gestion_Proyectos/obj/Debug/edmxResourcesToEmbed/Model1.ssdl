@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="base_proyectoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ACTIVIDAD">
+    <Key>
+      <PropertyRef Name="IDACTIVIDAD" />
+    </Key>
+    <Property Name="IDACTIVIDAD" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDPROYECTO" Type="int" />
+    <Property Name="NOMBREACT" Type="text" Nullable="false" />
+    <Property Name="DESCRIPCIONACT" Type="text" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ASIGNACION_TAREA">
+    <Key>
+      <PropertyRef Name="IDASIGNACION" />
+    </Key>
+    <Property Name="IDASIGNACION" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" />
+    <Property Name="IDTAREA" Type="int" />
+  </EntityType>
+  <EntityType Name="OBJETIVO">
+    <Key>
+      <PropertyRef Name="IDOBJETIVO" />
+    </Key>
+    <Property Name="IDOBJETIVO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDPROYECTO" Type="int" />
+    <Property Name="DESCRIPCIONOBJ" Type="text" />
+  </EntityType>
+  <EntityType Name="PROYECTO">
+    <Key>
+      <PropertyRef Name="IDPROYECTO" />
+    </Key>
+    <Property Name="IDPROYECTO" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" />
+    <Property Name="NOMBREPROYECTO" Type="text" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="text" />
+    <Property Name="FECHAINI" Type="datetime" />
+    <Property Name="FECHAFIN" Type="datetime" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TAREA">
+    <Key>
+      <PropertyRef Name="IDTAREA" />
+    </Key>
+    <Property Name="IDTAREA" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDACTIVIDAD" Type="int" />
+    <Property Name="NOMBRETAREA" Type="text" Nullable="false" />
+    <Property Name="DESCRIPCIONT" Type="text" Nullable="false" />
+    <Property Name="FECHAINIT" Type="datetime" Nullable="false" />
+    <Property Name="FECHAFINT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NOMBRE" Type="text" />
+    <Property Name="APELLIDO" Type="text" />
+    <Property Name="CORREO" Type="text" Nullable="false" />
+    <Property Name="CONTRASENA" Type="char" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="base_proyectoModelStoreContainer">
+    <EntitySet Name="ACTIVIDAD" EntityType="Self.ACTIVIDAD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ASIGNACION_TAREA" EntityType="Self.ASIGNACION_TAREA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OBJETIVO" EntityType="Self.OBJETIVO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROYECTO" EntityType="Self.PROYECTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TAREA" EntityType="Self.TAREA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

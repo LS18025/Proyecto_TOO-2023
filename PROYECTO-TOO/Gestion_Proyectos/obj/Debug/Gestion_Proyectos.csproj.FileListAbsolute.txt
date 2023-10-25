@@ -199,9 +199,6 @@ F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\es\M
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\obj\Debug\Gestion_Proyectos.dll
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\obj\Debug\Gestion_Proyectos.pdb
-F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\obj\Debug\Gestion_Proyectos.csproj.AssemblyReference.cache
-F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\obj\Debug\Gestion_Proyectos.csproj.CoreCompileInputs.cache
-F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\obj\Debug\Gestion_Proyectos.csproj.CopyComplete
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\Microsoft.AspNet.TelemetryCorrelation.dll
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\System.Buffers.dll
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\System.Diagnostics.DiagnosticSource.dll
@@ -216,3 +213,4 @@ F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\Syst
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\System.Memory.xml
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\System.Numerics.Vectors.xml
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\bin\System.Runtime.CompilerServices.Unsafe.xml
+F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\Gestion_Proyectos\obj\Debug\Gestion_Proyectos.csprojResolveAssemblyReference.cache
