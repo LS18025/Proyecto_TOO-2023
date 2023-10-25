@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="base_proyectoModelStoreContainer" CdmEntityContainer="base_proyectoEntities1">
+    <EntitySetMapping Name="ACTIVIDAD">
+      <EntityTypeMapping TypeName="base_proyectoModel.ACTIVIDAD">
+        <MappingFragment StoreEntitySet="ACTIVIDAD">
+          <ScalarProperty Name="IDACTIVIDAD" ColumnName="IDACTIVIDAD" />
+          <ScalarProperty Name="IDPROYECTO" ColumnName="IDPROYECTO" />
+          <ScalarProperty Name="NOMBREACT" ColumnName="NOMBREACT" />
+          <ScalarProperty Name="DESCRIPCIONACT" ColumnName="DESCRIPCIONACT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ASIGNACION_TAREA">
+      <EntityTypeMapping TypeName="base_proyectoModel.ASIGNACION_TAREA">
+        <MappingFragment StoreEntitySet="ASIGNACION_TAREA">
+          <ScalarProperty Name="IDASIGNACION" ColumnName="IDASIGNACION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IDTAREA" ColumnName="IDTAREA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OBJETIVO">
+      <EntityTypeMapping TypeName="base_proyectoModel.OBJETIVO">
+        <MappingFragment StoreEntitySet="OBJETIVO">
+          <ScalarProperty Name="IDOBJETIVO" ColumnName="IDOBJETIVO" />
+          <ScalarProperty Name="IDPROYECTO" ColumnName="IDPROYECTO" />
+          <ScalarProperty Name="DESCRIPCIONOBJ" ColumnName="DESCRIPCIONOBJ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROYECTO">
+      <EntityTypeMapping TypeName="base_proyectoModel.PROYECTO">
+        <MappingFragment StoreEntitySet="PROYECTO">
+          <ScalarProperty Name="IDPROYECTO" ColumnName="IDPROYECTO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBREPROYECTO" ColumnName="NOMBREPROYECTO" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="FECHAINI" ColumnName="FECHAINI" />
+          <ScalarProperty Name="FECHAFIN" ColumnName="FECHAFIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="base_proyectoModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAREA">
+      <EntityTypeMapping TypeName="base_proyectoModel.TAREA">
+        <MappingFragment StoreEntitySet="TAREA">
+          <ScalarProperty Name="IDTAREA" ColumnName="IDTAREA" />
+          <ScalarProperty Name="IDACTIVIDAD" ColumnName="IDACTIVIDAD" />
+          <ScalarProperty Name="NOMBRETAREA" ColumnName="NOMBRETAREA" />
+          <ScalarProperty Name="DESCRIPCIONT" ColumnName="DESCRIPCIONT" />
+          <ScalarProperty Name="FECHAINIT" ColumnName="FECHAINIT" />
+          <ScalarProperty Name="FECHAFINT" ColumnName="FECHAFINT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USUARIO">
+      <EntityTypeMapping TypeName="base_proyectoModel.USUARIO">
+        <MappingFragment StoreEntitySet="USUARIO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+          <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+          <ScalarProperty Name="CONTRASENA" ColumnName="CONTRASENA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
