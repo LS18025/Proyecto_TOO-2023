@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CapaEntidad;
+using CapaDatos;
 
 
 
@@ -29,7 +30,14 @@ namespace Gestion_Proyectos.Controllers
 
             return View();
         }
-        
-    
+        public JsonResult listarUsuarios()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            lista = new GestionUsuarios().GetUsuarios();
+            return Json(lista, JsonRequestBehavior.AllowGet);
+
+
+        }
+
     }
 }

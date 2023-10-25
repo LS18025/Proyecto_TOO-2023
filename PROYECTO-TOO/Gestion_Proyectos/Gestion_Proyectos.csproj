@@ -388,6 +388,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
+      <Project>{e714b8c0-b1b2-4818-adeb-ce41fd973aab}</Project>
+      <Name>CapaDatos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
       <Project>{fe8c3c1b-989a-4d0f-8363-9714573cfd37}</Project>
       <Name>CapaEntidad</Name>
