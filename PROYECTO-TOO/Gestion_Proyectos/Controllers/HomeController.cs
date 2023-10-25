@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CapaEntidad;
+
+
 
 namespace Gestion_Proyectos.Controllers
 {
@@ -26,6 +29,7 @@ namespace Gestion_Proyectos.Controllers
 
             return View();
         }
+        
     
     }
 }
