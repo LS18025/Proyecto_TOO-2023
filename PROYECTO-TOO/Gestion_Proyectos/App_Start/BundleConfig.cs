@@ -13,6 +13,7 @@ namespace Gestion_Proyectos
 
             bundles.Add(new Bundle("~/bundles/complementos").Include(
                 "~/Scripts/fontawesome/all.min.js",
+                "~/Scripts/adminlte.min.js",
                 "~/Scripts/scripts.js"));
 
             // Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información. De este modo, estará
@@ -22,7 +23,8 @@ namespace Gestion_Proyectos
                       "~/Scripts/bootstrap.bundle.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css"));
+                "~/Content/adminlte.min.css",
+                "~/Content/site.css"));
         }
     }
 }
