@@ -49,5 +49,32 @@ namespace CapaDatos
 
             return lista;
         }
+        public bool newUsuario(Usuario usuario)
+        {
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "INSERT INTO USUARIO (NOMBRE, APELLIDO, CORREO, CONTRASENA) " +
+                                       "VALUES (@nombre, @apellido, @correo, @contrasena)";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+                    comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+                    comando.Parameters.AddWithValue("@correo", usuario.correo);
+                    comando.Parameters.AddWithValue("@contrasena", usuario.contrasena);
+
+                    miConexion.Open();
+
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    return filasAfectadas > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
