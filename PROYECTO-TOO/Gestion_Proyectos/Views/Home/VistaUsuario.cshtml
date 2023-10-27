@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "VistaUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-primary mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Nuevo Usuario</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form method="post" action="@Url.Action("InsertarUsuario", "Home")">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su Nombre..." required>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese sus Apellidos" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo</label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo electronico" required>
+            </div>
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña" required>
+            </div>
+        </div>
+
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+
+        </div>
+    </form>
+
+
+
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Usuarios</h3>
+
+
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-3">
+
+
+        <table id="tablaUsuarios">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+    <!-- /.card-body -->
+</div>
+
+@section scripts {
+    <script>
+
+            $.ajax({
+                url: "@Url.Action("ListarUsuarios", "Home")",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+
+                }
+            });
+
+        $(document).ready(function () {
+            var tabla = $('#tablaUsuarios').DataTable({
+                resonsive: true,
+                ordering: false,
+                "ajax": {
+                    url: "@Url.Action("ListarUsuarios", "Home")",
+                    type: "GET",
+                    dataType: "json",
+                },
+                "columns": [
+                    {"data": "nombre"},
+                    {"data": "apellido"},
+                    { "data": "correo" },
+                    {
+                        "render": function (data, type, row) {
+                            // Los datos de la fila actual están en el objeto "row"
+                            // Debes acceder a los campos como row.nombre, row.apellido, row.correo, etc.
+
+                            // Botón de edición
+                            var editarBtn = '<button class="btn btn-primary btn-editar" data-id="' + row.id + '">Editar</button>';
+
+                            // Botón de borrado
+                            var borrarBtn = '<button class="btn btn-danger btn-borrar" data-id="' + row.id + '">Borrar</button>';
+
+                            return editarBtn + borrarBtn;
+                        }
+                    }
+
+                ],
+                "language": {
+                    "search": "Buscar:",
+                    "lengthMenu": "Registros _MENU_",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                }
+
+
+            });
+            $('#tablaUsuarios').on('click', '.btn-borrar', function () {
+                var userId = $(this).data('id');
+                var confirmar = confirm("¿Estás seguro de que deseas borrar este usuario?");
+
+                if (confirmar) {
+                    $.ajax({
+                        url: "@Url.Action("BorrarUsuario", "Home")",
+                        type: "POST",
+                        data: { id: userId },
+                        success: function (result) {
+                            if (result) {
+                                alert("Usuario eliminado exitosamente.");
+                                // Actualizar la tabla DataTable después de la eliminación
+                                tabla.ajax.reload();
+                            } else {
+                                alert("Error al eliminar el usuario.");
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        });
+    </script>
+
+
+
+}
+
+
+

@@ -32,9 +32,9 @@ namespace CapaDatos
                                     {
                                         id = Convert.ToInt32(lector["ID"]),
                                         nombre = lector["NOMBRE"].ToString(),
-                                        apellido = lector["NOMBRE"].ToString(),
-                                        correo = lector["NOMBRE"].ToString(),
-                                        contrasena = lector["NOMBRE"].ToString()
+                                        apellido = lector["APELLIDO"].ToString(),
+                                        correo = lector["CORREO"].ToString(),
+                                        
                                     }
                                 );
                         }
@@ -76,6 +76,30 @@ namespace CapaDatos
                 return false;
             }
         }
-        
+        public bool DeleteUsuario(int id)
+        {
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "DELETE FROM USUARIO WHERE ID = @id";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@id", id);
+
+                    miConexion.Open();
+
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    return filasAfectadas > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
     }
 }

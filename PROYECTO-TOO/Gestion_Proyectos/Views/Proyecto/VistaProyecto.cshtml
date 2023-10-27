@@ -2,43 +2,7 @@
 @{
     ViewBag.Title = "VistaProyecto";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<div class="card card-primary mt-4">
-    <div class="card-header">
-        <h3 class="card-title">Nuevo Usuario</h3>
-    </div>
-    <!-- /.card-header -->
-    <!-- form start -->
-    <form method="post" action="@Url.Action("InsertarUsuario", "Proyecto")">
-        <div class="card-body">
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su Nombre...">
-            </div>
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese sus Apellidos">
-            </div>
-            <div class="form-group">
-                <label for="correo">Correo</label>
-                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo electronico">
-            </div>
-            <div class="form-group">
-                <label for="contrasena">Contraseña</label>
-                <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña">
-            </div> 
-        </div>
-        <!-- /.card-body -->
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            
-        </div>
-    </form>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/complementos")
-    @Scripts.Render("~/bundles/bootstrap")
-    
-</div>
 
