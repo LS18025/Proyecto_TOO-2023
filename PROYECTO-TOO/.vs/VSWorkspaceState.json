@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Gestion_Proyectos"
+    "\\Gestion_Proyectos",
+    "\\Gestion_Proyectos\\Controllers",
+    "\\Gestion_Proyectos\\Views",
+    "\\Gestion_Proyectos\\Views\\Proyecto"
   ],
-  "SelectedNode": "\\Gestion_Proyectos\\Web.config",
+  "SelectedNode": "\\Gestion_Proyectos\\Views\\Proyecto\\VistaActividad.cshtml",
   "PreviewInSolutionExplorer": false
 }
