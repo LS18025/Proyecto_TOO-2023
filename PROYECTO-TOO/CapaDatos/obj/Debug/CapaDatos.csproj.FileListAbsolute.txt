@@ -7,3 +7,12 @@ F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDa
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.csproj.CopyComplete
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.dll
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.pdb
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\bin\Debug\CapaDatos.dll
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\bin\Debug\CapaDatos.pdb
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\bin\Debug\CapaEntidad.dll
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\bin\Debug\CapaEntidad.pdb
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.csproj.AssemblyReference.cache
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.csproj.CoreCompileInputs.cache
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.csproj.CopyComplete
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.dll
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaDatos\obj\Debug\CapaDatos.pdb
