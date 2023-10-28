@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Gestion_Proyectos"
   ],
-  "SelectedNode": "\\PROYECTO-TOO.sln",
+  "SelectedNode": "\\Gestion_Proyectos\\Web.config",
   "PreviewInSolutionExplorer": false
 }

@@ -3,6 +3,42 @@
     ViewBag.Title = "VistaActividad";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="card card-success mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Nueva actividad</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form method="post" action="@Url.Action("AñadirActividad", "Proyecto")">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="tituloAct">Nombre</label>
+                <input type="text" class="form-control" id="nombreAct" name="nombreAct" placeholder="Ingrese el nombre de la actividad.">
+            </div>
+            <div class="form-group">
+                <label for="descripcion">descripcion</label>
+                <input type="text" class="form-control" id="descripcionAct" name="descripcionAct" placeholder="Ingrese una descripcion de la actividad">
+            </div>
+            <div class="form-group">
+                <label for="proyectoAct">proyecto al que pertenece</label>
+                <select id="seleccionador" class="form-control" placeholder="seleccione opciones">
+                    <option>proyecto 1</option>
+                    <option>proyecto 2</option>
+                    <option>proyecto 3</option>
+                </select>
+            </div>
+        </div>
+        <!-- /.card-body -->
 
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+
+        </div>
+    </form>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/complementos")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</div>
 <h2>Vista de Actividades</h2>
 
