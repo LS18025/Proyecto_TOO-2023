@@ -53,5 +53,33 @@ namespace Gestion_Proyectos.Controllers
 
             return View("VistaProyecto");
         }
+        //proyecto para crear una nueva actividad
+        public ActionResult crearActividad(Proyecto idProy, string nombreAct, string descAct)
+        {
+            //en general estoy copiando y pegando lo que ya hizo oscar con el usuario
+            //pero adaptandolo a los campos que requieren las actividades.
+            //Aunque de ya puedo preveer que esto dara error debido a que proyecto como tal 
+            //es un objeto que no se esta creando, asi que no podra ingresar nada
+
+            Actividad nuevaAct = new Actividad {
+                nombreAct = nombreAct,
+                idProyect =idProy,
+                descripcionAct = descAct
+
+            };
+            GestionActividades gesAct= new GestionActividades();
+            bool insercionExitosa = gesAct.newActividad(nuevaAct);
+
+            if (insercionExitosa)
+            {
+                ViewBag.Mensaje = "Usuario insertado exitosamente.";
+            }
+            else
+            {
+                ViewBag.Mensaje = "Error al insertar el usuario.";
+            }
+
+            return View("VistaActividad");
+        }
     }
 }

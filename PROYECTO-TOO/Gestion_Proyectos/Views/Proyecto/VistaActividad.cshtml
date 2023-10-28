@@ -3,13 +3,14 @@
     ViewBag.Title = "VistaActividad";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!-- esta vista se ha copiado en gran parte de la vistade usuario modificando algunas cosas -->
 <div class="card card-success mt-4">
     <div class="card-header">
         <h3 class="card-title">Nueva actividad</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form method="post" action="@Url.Action("AñadirActividad", "Proyecto")">
+    <form method="post" action="@Url.Action("crearActividad", "Actividad")">
         <div class="card-body">
             <div class="form-group">
                 <label for="tituloAct">Nombre</label>
@@ -19,9 +20,11 @@
                 <label for="descripcion">descripcion</label>
                 <input type="text" class="form-control" id="descripcionAct" name="descripcionAct" placeholder="Ingrese una descripcion de la actividad">
             </div>
+            <!-- consideraba que, para darle mayor variedad al tema en vez de que el usuario tenga que escribir el proyecto al que pertenece -->
+            <!-- que el usuario seleccione de entre los proyectos exitente, pero aun tengo que vincular esto con la tabla de proyectos -->
             <div class="form-group">
                 <label for="proyectoAct">proyecto al que pertenece</label>
-                <select id="seleccionador" class="form-control" placeholder="seleccione opciones">
+                <select id="proyectoAct" class="form-control" placeholder="seleccione opciones">
                     <option>proyecto 1</option>
                     <option>proyecto 2</option>
                     <option>proyecto 3</option>
