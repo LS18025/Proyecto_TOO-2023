@@ -5,4 +5,128 @@
 
 }
 
+<div class="card card-primary mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Nuevo Proyecto</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form method="post" action="@Url.Action("AgregarProyecto", "Proyecto")">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="nombreProyecto">Nombre del Proyecto</label>
+                <input type="text" class="form-control" id="nombreProyecto" name="nombreProyecto" placeholder="Ingrese el nombre del proyecto" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripción del proyecto" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="fechaIni">Fecha de Inicio</label>
+                <input type="date" class="form-control" id="fechaIni" name="fechaIni" required>
+            </div>
+            <div class="form-group">
+                <label for="fechaFin">Fecha de Finalización</label>
+                <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+            </div>
+        </div>
 
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>
+
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Proyectos</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-3">
+        <table id="tablaProyectos">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Finalización</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+    <!-- /.card-body -->
+</div>
+
+@section scripts {
+    <script>
+        $.ajax({
+            url: "@Url.Action("ListarProyectos", "Proyecto")",
+            type: "GET",
+            dataType: "json",
+            success: function (data1) {
+
+            }
+        });
+        $(document).ready(function () {
+            var tablaProyecto = $('#tablaProyectos').DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: "@Url.Action("ListarProyectos", "Proyecto")",
+                    type: "GET",
+                    dataType: "json",
+                },
+                "columns": [
+                    {"data": "nombreProyecto"},
+                    {"data": "descripcion"},
+                    {
+                        "data": "fechaIni",
+                        "render": function (data) {
+                            // Formatea la fecha antes de mostrarla
+                            return new Date(parseInt(data.substr(6))).toLocaleDateString();
+                        }
+                    },
+                    {
+                        "data": "fechaFin",
+                        "render": function (data) {
+                            // Formatea la fecha antes de mostrarla
+                            return new Date(parseInt(data.substr(6))).toLocaleDateString();
+                        }
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            // Los datos de la fila actual están en el objeto "row"
+                            // Debes acceder a los campos como row.nombre, row.apellido, row.correo, etc.
+
+                            // Botón de edición
+                            var editarBtn = '<button class="btn btn-primary btn-editar" data-id="' + row.id + '">Editar</button>';
+
+                            // Botón de borrado
+                            // Botón de borrado
+                            var borrarBtn = '<button class="btn btn-danger btn-borrar" data-idproyecto="' + row.id + '">Borrar</button>';
+
+
+
+                            return editarBtn + borrarBtn;
+                        }
+                    }
+
+                    // Agrega más columnas según tus necesidades
+                ],
+                "language": {
+                    "search": "Buscar:",
+                    "lengthMenu": "Registros _MENU_",
+                    "emptyTable": "No hay datos disponibles en la tabla",
+                }
+            });
+
+        });
+    </script>
+}

@@ -36,6 +36,27 @@ namespace Gestion_Proyectos.Controllers
 
             return View();
         }
+        public ActionResult EditarUsuario(int id)
+        {
+            Usuario usuario = new GestionUsuarios().ObtenerUsuarioPorID(id);
+
+            if (usuario != null)
+            {
+                return View(usuario);
+            }
+            else
+            {
+                // Manejar el caso en el que no se encuentre el usuario
+                // Por ejemplo, puedes redirigir a una vista de error.
+                return RedirectToAction("UsuarioNoEncontrado");
+            }
+        }
+        public ActionResult UsuarioNoEncontrado()
+        {
+            // Puedes mostrar una vista de error o redirigir a otra página aquí.
+            return View("Error");
+        }
+
         [HttpPost]
         public ActionResult InsertarUsuario(string nombre, string apellido, string correo, string contrasena)
         {
@@ -93,6 +114,34 @@ namespace Gestion_Proyectos.Controllers
             return RedirectToAction("VistaUsuario");
         }
 
+        [HttpPost]
+        public ActionResult GuardarEdicionUsuario(Usuario usuario)
+        {
+            GestionUsuarios gestionUsuarios = new GestionUsuarios(); // Crear una instancia de GestionUsuarios
+
+            if (ModelState.IsValid)
+            {
+                bool edicionExitosa = gestionUsuarios.EditarUsuario(usuario);
+
+                if (edicionExitosa)
+                {
+                    TempData["SuccessMessage"] = "Usuario actualizado exitosamente.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Error al actualizar el usuario.";
+                }
+
+                return RedirectToAction("VistaUsuario");
+
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Por favor, complete todos los campos obligatorios correctamente.";
+                return View("EditarUsuario", usuario); // Vuelve a la vista de edición con los datos y errores.
+            }
+        }
+        
 
 
     }

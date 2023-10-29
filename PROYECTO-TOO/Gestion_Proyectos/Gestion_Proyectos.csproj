@@ -614,6 +614,8 @@
     <Content Include="Views\Proyecto\VistaActividad.cshtml" />
     <Content Include="Views\Proyecto\VistaTarea.cshtml" />
     <Content Include="Views\Home\VistaUsuario.cshtml" />
+    <Content Include="Views\Home\EditarUsuario.cshtml" />
+    <Content Include="Views\Home\UsuarioNoEncontrado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

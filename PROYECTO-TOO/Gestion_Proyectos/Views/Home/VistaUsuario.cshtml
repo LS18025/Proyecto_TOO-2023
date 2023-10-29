@@ -43,6 +43,7 @@
 </div>
 
 
+
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Lista de Usuarios</h3>
@@ -113,7 +114,7 @@
                 ],
                 "language": {
                     "search": "Buscar:",
-                    "lengthMenu": "Registros _MENU_",
+                    "lengthMenu": "Mostrar _MENU_ Registros",
                     "emptyTable": "No hay datos disponibles en la tabla",
                 }
 
@@ -140,6 +141,23 @@
                     });
                 }
             });
+            // Manejador de eventos para el botón de edición
+            $('#tablaUsuarios').on('click', '.btn-editar', function () {
+                var userId = $(this).data('id');
+                var nombre = $(this).data('nombre');
+                var apellido = $(this).data('apellido');
+                var correo = $(this).data('correo');
+
+                // Rellena el formulario de edición con los datos recuperados
+                $('#nombre').val(nombre);
+                $('#apellido').val(apellido);
+                $('#correo').val(correo);
+
+                // Redirige a la vista de edición de usuario
+                window.location.href = "/Home/EditarUsuario?id=" + userId;
+            });
+
+
 
 
         });

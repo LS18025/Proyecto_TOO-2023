@@ -76,6 +76,33 @@ namespace CapaDatos
                 return false;
             }
         }
+        public bool EditarUsuario(Usuario usuario)
+        {
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "UPDATE USUARIO SET NOMBRE = @nombre, APELLIDO = @apellido, CORREO = @correo WHERE ID = @id";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@id", usuario.id);
+                    comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+                    comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+                    comando.Parameters.AddWithValue("@correo", usuario.correo);
+
+                    miConexion.Open();
+
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    return filasAfectadas > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool DeleteUsuario(int id)
         {
             try
@@ -99,6 +126,46 @@ namespace CapaDatos
                 return false;
             }
         }
+        public Usuario ObtenerUsuarioPorID(int id)
+        {
+            Usuario usuario = null;
+
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "SELECT ID, NOMBRE, APELLIDO, CORREO FROM USUARIO WHERE ID = @id";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@id", id);
+
+                    miConexion.Open();
+
+                    using (SqlDataReader lector = comando.ExecuteReader())
+                    {
+                        if (lector.Read())
+                        {
+                            usuario = new Usuario
+                            {
+                                id = Convert.ToInt32(lector["ID"]),
+                                nombre = lector["NOMBRE"].ToString(),
+                                apellido = lector["APELLIDO"].ToString(),
+                                correo = lector["CORREO"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Manejar cualquier excepción o error aquí, por ejemplo, registrar un mensaje de error.
+                // No necesitas devolver un valor en caso de error, ya que el usuario será nulo por defecto.
+            }
+
+            return usuario;
+        }
+
 
 
     }
