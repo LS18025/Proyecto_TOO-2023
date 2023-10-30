@@ -165,6 +165,46 @@ namespace CapaDatos
 
             return usuario;
         }
+        public Usuario ValidarCredenciales(string correo, string contrasena)
+        {
+            Usuario usuario = null;
+
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "SELECT ID, NOMBRE, APELLIDO, CORREO FROM USUARIO WHERE CORREO = @correo AND CONTRASENA = @contrasena";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@correo", correo);
+                    comando.Parameters.AddWithValue("@contrasena", contrasena);
+
+                    miConexion.Open();
+
+                    using (SqlDataReader lector = comando.ExecuteReader())
+                    {
+                        if (lector.Read())
+                        {
+                            usuario = new Usuario
+                            {
+                                id = Convert.ToInt32(lector["ID"]),
+                                nombre = lector["NOMBRE"].ToString(),
+                                apellido = lector["APELLIDO"].ToString(),
+                                correo = lector["CORREO"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Manejar cualquier excepción o error aquí.
+            }
+
+            return usuario;
+        }
+
 
 
 

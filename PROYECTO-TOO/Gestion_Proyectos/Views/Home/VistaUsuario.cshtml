@@ -102,10 +102,11 @@
                             // Debes acceder a los campos como row.nombre, row.apellido, row.correo, etc.
 
                             // Botón de edición
-                            var editarBtn = '<button class="btn btn-primary btn-editar" data-id="' + row.id + '">Editar</button>';
+                            var editarBtn = '<button class="btn btn-primary btn-editar mr-2" data-id="' + row.id + '"><i class="fas fa-pen"></i></button>';
 
                             // Botón de borrado
-                            var borrarBtn = '<button class="btn btn-danger btn-borrar" data-id="' + row.id + '">Borrar</button>';
+                            // Botón de borrado
+                            var borrarBtn = '<button class="btn btn-danger btn-borrar" data-idproyecto="' + row.id + '"><i class="fas fa-trash"></i></button>';
 
                             return editarBtn + borrarBtn;
                         }
@@ -156,7 +157,7 @@
                 // Redirige a la vista de edición de usuario
                 window.location.href = "/Home/EditarUsuario?id=" + userId;
             });
-
+            
 
 
 

@@ -13,5 +13,6 @@ namespace CapaEntidad
         public string apellido { get; set; }
         public string correo { get; set; }
         public string contrasena { get; set; }
+        
     }
 }

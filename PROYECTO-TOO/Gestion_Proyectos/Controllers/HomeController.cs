@@ -36,6 +36,10 @@ namespace Gestion_Proyectos.Controllers
 
             return View();
         }
+        public ActionResult Login()
+        {
+            return View();
+        }
         public ActionResult EditarUsuario(int id)
         {
             Usuario usuario = new GestionUsuarios().ObtenerUsuarioPorID(id);
@@ -141,7 +145,34 @@ namespace Gestion_Proyectos.Controllers
                 return View("EditarUsuario", usuario); // Vuelve a la vista de edición con los datos y errores.
             }
         }
-        
+        [HttpPost]
+        public ActionResult InicioSesion(string correo, string contrasena)
+        {
+            // Validar credenciales con la base de datos
+            Usuario usuario = new GestionUsuarios().ValidarCredenciales(correo, contrasena);
+
+            if (usuario != null)
+            {
+                // Establecer la sesión de inicio de sesión para el usuario
+                Session["UserID"] = usuario.id; // Aquí asumo que 'id' es la propiedad que identifica al usuario
+                return RedirectToAction("Profile");
+            }
+            else
+            {
+                ViewBag.Mensaje = "Credenciales inválidas.";
+                return View("Login");
+            }
+        }
+        public ActionResult CerrarSesion()
+        {
+            Session.Remove("Usuario");
+            return RedirectToAction("Login");
+        }
+
+
+
+
+
 
 
     }

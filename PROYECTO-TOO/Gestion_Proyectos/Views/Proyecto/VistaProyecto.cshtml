@@ -5,38 +5,93 @@
 
 }
 
-<div class="card card-primary mt-4">
-    <div class="card-header">
-        <h3 class="card-title">Nuevo Proyecto</h3>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Nuevo Proyecto
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Proyecto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nombreProyecto">Nombre del Proyecto</label>
+                            <input type="text" class="form-control" id="nombreProyecto" name="nombreProyecto" placeholder="Ingrese el nombre del proyecto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripción del proyecto" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaIni">Fecha de Inicio</label>
+                            <input type="date" class="form-control" id="fechaIni" name="fechaIni" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha de Finalización</label>
+                            <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+                        </div>
+                    </div>
+
+                    <!-- /.card-body -->
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
     </div>
-    <!-- /.card-header -->
-    <!-- form start -->
-    <form method="post" action="@Url.Action("AgregarProyecto", "Proyecto")">
-        <div class="card-body">
-            <div class="form-group">
-                <label for="nombreProyecto">Nombre del Proyecto</label>
-                <input type="text" class="form-control" id="nombreProyecto" name="nombreProyecto" placeholder="Ingrese el nombre del proyecto" required>
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Proyecto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripción del proyecto" required></textarea>
+            <div class="modal-body">
+                <form id="modalForm" method="post">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nombreProyecto">Nombre del Proyecto</label>
+                            <input type="text" class="form-control" id="nombreProyecto1" name="nombreProyecto" placeholder="Ingrese el nombre del proyecto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea class="form-control" id="descripcion1" name="descripcion" placeholder="Ingrese una descripción del proyecto" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaIni">Fecha de Inicio</label>
+                            <input type="date" class="form-control" id="fechaIni1" name="fechaIni" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha de Finalización</label>
+                            <input type="date" class="form-control" id="fechaFin1" name="fechaFin" required>
+                        </div>
+                    </div>
+
+                    <!-- /.card-body -->
+
+
+                </form>
             </div>
-            <div class="form-group">
-                <label for="fechaIni">Fecha de Inicio</label>
-                <input type="date" class="form-control" id="fechaIni" name="fechaIni" required>
-            </div>
-            <div class="form-group">
-                <label for="fechaFin">Fecha de Finalización</label>
-                <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </div>
-
-        <!-- /.card-body -->
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 
@@ -66,16 +121,46 @@
 
 @section scripts {
     <script>
-        $.ajax({
-            url: "@Url.Action("ListarProyectos", "Proyecto")",
-            type: "GET",
-            dataType: "json",
-            success: function (data1) {
+        var tablaProyecto;
+        function Guardar() {
+            // Evita la acción predeterminada del formulario (recargar la página).
 
+            var proyecto = {
+                nombreProyecto: $("#nombreProyecto").val(),
+                descripcion: $("#descripcion").val(),
+                fechaIni: $("#fechaIni").val(),
+                fechaFin: $("#fechaFin").val(),
             }
-        });
+
+            $.ajax({
+                url: "@Url.Action("AgregarProyecto", "Proyecto")",
+                type: "POST",
+                data: JSON.stringify(proyecto), // No necesitas envolverlo en un objeto { Proyecto: proyecto }
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o error.
+                    if (data.success) {
+                        
+                        $("#exampleModal").modal("hide"); // Cierra el modal
+                        tablaProyecto.ajax.reload();
+                        // Aquí puedes recargar la tabla u otra actualización si es necesario.
+                    } else {
+                        alert("Error: " + data.message); // Muestra un mensaje de error
+                    }
+                }
+            });
+        }
         $(document).ready(function () {
-            var tablaProyecto = $('#tablaProyectos').DataTable({
+            $('#exampleModal').on('show.bs.modal', function () {
+                // Restablecer los campos del modal
+                $("#nombreProyecto").val("");
+                $("#descripcion").val("");
+                $("#fechaIni").val("");
+                $("#fechaFin").val("");
+            });
+
+            tablaProyecto = $('#tablaProyectos').DataTable({
                 responsive: true,
                 ordering: false,
                 "ajax": {
@@ -106,11 +191,11 @@
                             // Debes acceder a los campos como row.nombre, row.apellido, row.correo, etc.
 
                             // Botón de edición
-                            var editarBtn = '<button class="btn btn-primary btn-editar" data-id="' + row.id + '">Editar</button>';
+                            var editarBtn = '<button class="btn btn-primary btn-editar mr-2" data-id="' + row.id + '"><i class="fas fa-pen"></i></button>';
 
                             // Botón de borrado
                             // Botón de borrado
-                            var borrarBtn = '<button class="btn btn-danger btn-borrar" data-idproyecto="' + row.id + '">Borrar</button>';
+                            var borrarBtn = '<button class="btn btn-danger btn-borrar" data-idproyecto="' + row.id + '"><i class="fas fa-trash"></i></button>';
 
 
 
@@ -127,6 +212,22 @@
                 }
             });
 
+            $('#tablaProyectos tbody').on('click', '.btn-editar', function () {
+                var filaSeleccionada = $(this).closest("tr").prev();
+                var info = tablaProyecto.row(filaSeleccionada).data();
+                $("#nombreProyecto1").val(info.nombreProyecto)
+                $("#descripcion1").val(info.descripcion)
+                var fechaIni = new Date(parseInt(info.fechaIni.substr(6)));
+                var fechaFin = new Date(parseInt(info.fechaFin.substr(6)));
+
+                // Establece los valores de fecha en los campos del modal
+                $("#fechaIni1").val(fechaIni.toISOString().split('T')[0]);
+                $("#fechaFin1").val(fechaFin.toISOString().split('T')[0]);
+
+                $("#exampleModal2").modal("show");
+            });
+
         });
+
     </script>
 }

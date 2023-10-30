@@ -410,6 +410,7 @@
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
     <Content Include="Content\solid.min.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\v4-shims.css" />
@@ -616,6 +617,7 @@
     <Content Include="Views\Home\VistaUsuario.cshtml" />
     <Content Include="Views\Home\EditarUsuario.cshtml" />
     <Content Include="Views\Home\UsuarioNoEncontrado.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,6 +26,7 @@ namespace Gestion_Proyectos
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/adminlte.min.css",
+                "~/Content/styles.css",
                 "~/Content/DataTables/css/jquery.dataTables.css",
                 "~/Content/DataTables/css/responsive.dataTables.css",
                 "~/Content/site.css"));

@@ -37,31 +37,29 @@ namespace Gestion_Proyectos.Controllers
         }
 
         [HttpPost]
-        public ActionResult AgregarProyecto(Proyecto proyecto)
+        public JsonResult AgregarProyecto(Proyecto proyecto)
         {
             if (ModelState.IsValid)
             {
-                GestionProyectos gestionProyectos = new GestionProyectos(); // Crear una instancia de GestionProyectos
+                GestionProyectos gestionProyectos = new GestionProyectos();
 
                 bool insercionExitosa = gestionProyectos.newProyecto(proyecto);
 
                 if (insercionExitosa)
                 {
-                    TempData["SuccessMessage"] = "Proyecto insertado exitosamente.";
+                    return Json(new { success = true, message = "Proyecto insertado exitosamente" });
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Error al insertar el proyecto.";
+                    return Json(new { success = false, message = "Error al insertar el proyecto" });
                 }
-
-                return RedirectToAction("VistaProyecto");
             }
             else
             {
-                TempData["ErrorMessage"] = "Por favor, complete todos los campos obligatorios correctamente.";
-                return View("VistaProyecto", proyecto); // Vuelve a la vista de proyectos con los datos y errores.
+                return Json(new { success = false, message = "Por favor, complete todos los campos obligatorios correctamente" });
             }
         }
+
 
     }
 }
