@@ -59,6 +59,45 @@ namespace Gestion_Proyectos.Controllers
                 return Json(new { success = false, message = "Por favor, complete todos los campos obligatorios correctamente" });
             }
         }
+        [HttpPost]
+        public JsonResult EditarProyecto(Proyecto proyecto)
+        {
+            if (ModelState.IsValid)
+            {
+                GestionProyectos gestionProyectos = new GestionProyectos();
+
+                bool actualizacionExitosa = gestionProyectos.EditProyecto(proyecto);
+
+                if (actualizacionExitosa)
+                {
+                    return Json(new { success = true, message = "Proyecto actualizado exitosamente" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Error al actualizar el proyecto" });
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "Por favor, complete todos los campos obligatorios correctamente" });
+            }
+        }
+        [HttpPost]
+        public JsonResult BorrarProyecto(int idProyecto)
+        {
+            GestionProyectos gestionProyectos = new GestionProyectos();
+
+            bool eliminacionExitosa = gestionProyectos.EliminarProyecto(idProyecto);
+
+            if (eliminacionExitosa)
+            {
+                return Json(new { success = true, message = "Proyecto eliminado exitosamente" });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Error al eliminar el proyecto" });
+            }
+        }
 
 
     }

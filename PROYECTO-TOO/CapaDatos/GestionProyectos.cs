@@ -76,7 +76,57 @@ namespace CapaDatos
                 return false; // Manejo de excepciones, puedes registrar errores si es necesario.
             }
         }
-        
+        public bool EditProyecto(Proyecto proyecto)
+        {
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "UPDATE PROYECTO SET NOMBREPROYECTO = @nombreProyecto, DESCRIPCION = @descripcion, FECHAINI = @fechaIni, FECHAFIN = @fechaFin WHERE IDPROYECTO = @idProyecto";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@idProyecto", proyecto.idProyecto); // Asegúrate de incluir el ID del proyecto a editar
+                    comando.Parameters.AddWithValue("@nombreProyecto", proyecto.nombreProyecto);
+                    comando.Parameters.AddWithValue("@descripcion", proyecto.descripcion);
+                    comando.Parameters.AddWithValue("@fechaIni", proyecto.fechaIni);
+                    comando.Parameters.AddWithValue("@fechaFin", proyecto.fechaFin);
+
+                    miConexion.Open();
+
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    return filasAfectadas > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false; // Manejo de excepciones, puedes registrar errores si es necesario.
+            }
+        }
+        public bool EliminarProyecto(int idProyecto)
+        {
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "DELETE FROM PROYECTO WHERE IDPROYECTO = @idProyecto";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@idProyecto", idProyecto);
+
+                    miConexion.Open();
+
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    return filasAfectadas > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false; // Manejo de excepciones, puedes registrar errores si es necesario.
+            }
+        }
+
 
 
     }
