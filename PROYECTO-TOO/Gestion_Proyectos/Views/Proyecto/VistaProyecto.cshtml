@@ -5,6 +5,43 @@
 
 }
 
+<head>
+    <style>
+        #tablaProyectos {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #tablaProyectos th, #tablaProyectos td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            #tablaProyectos th {
+                background-color: #f2f2f2;
+            }
+
+            #tablaProyectos tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #tablaProyectos tr:hover {
+                background-color: #ddd;
+            }
+
+            /* Alineación de los botones en cada fila */
+            #tablaProyectos .btn {
+                margin-right: 5px; /* Espacio entre botones */
+            }
+
+            /* Ajuste de z-index para que los botones no se superpongan con el contenido de la fila */
+            #tablaProyectos .show-control {
+                z-index: 2;
+            }
+
+    </style>
+</head>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Nuevo Proyecto
@@ -200,7 +237,7 @@
 
             tablaProyecto = $('#tablaProyectos').DataTable({
                 responsive: true,
-                autoWidth: true,
+                autoWidth: false,
                 ordering: false,
                 "ajax": {
                     url: "@Url.Action("ListarProyectos", "Proyecto")",
@@ -225,20 +262,16 @@
                         }
                     },
                     {
+                        "data": null,
                         "render": function (data, type, row) {
-                            // Los datos de la fila actual están en el objeto "row"
-                            // Debes acceder a los campos como row.nombre, row.apellido, row.correo, etc.
-
-                            // Botón de edición
-                            var editarBtn = '<button class="btn btn-primary btn-editar mr-2" data-idProyecto="' + row.id + '"><i class="fas fa-pen"></i></button>';
-
-                            // Botón de borrado
-                            // Botón de borrado
+                            // Botón de edición en la fila principal de datos
+                            var editarBtn = '<button class="btn btn-primary btn-editar" data-idProyecto="' + row.id + '"><i class="fas fa-pen"></i></button>';
                             var borrarBtn = '<button class="btn btn-danger btn-borrar" data-idproyecto="' + row.id + '"><i class="fas fa-trash"></i></button>';
-
+                            
                             return editarBtn + borrarBtn;
                         }
-                    }
+                    },
+                    
 
                     // Agrega más columnas según tus necesidades
                 ],
@@ -251,7 +284,7 @@
 
 
             $('#tablaProyectos tbody').on('click', '.btn-editar', function () {
-                var filaSeleccionada = $(this).closest("tr").prev();
+                var filaSeleccionada = $(this).closest("tr");
                 info = tablaProyecto.row(filaSeleccionada).data();
                 //elementos ocultos
                 $("#editIdProyecto").val(info.idProyecto);
@@ -274,7 +307,7 @@
             });
             $('#tablaProyectos').on('click', '.btn-borrar', function () {
 
-                var userSeleccionado = $(this).closest("tr").prev();
+                var userSeleccionado = $(this).closest("tr");
                 var info2 = tablaProyecto.row(userSeleccionado).data();
                 swal({
                     title: "Estas seguro?",
