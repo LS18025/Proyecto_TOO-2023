@@ -165,15 +165,59 @@ namespace CapaDatos
 
             return usuario;
         }
-        public Usuario ValidarCredenciales(string correo, string contrasena)
+        public bool RegistrarUsuario(Usuario usuario)
         {
-            Usuario usuario = null;
-
             try
             {
                 using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "SELECT ID, NOMBRE, APELLIDO, CORREO FROM USUARIO WHERE CORREO = @correo AND CONTRASENA = @contrasena";
+                    string sentencia = "INSERT INTO USUARIO (NOMBRE, APELLIDO, CORREO, CONTRASENA) " +
+                                       "VALUES (@nombre, @apellido, @correo, @contrasena)";
+                    SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                    comando.CommandType = CommandType.Text;
+
+                    comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+                    comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+                    comando.Parameters.AddWithValue("@correo", usuario.correo);
+                    comando.Parameters.AddWithValue("@contrasena", usuario.contrasena);
+
+                    miConexion.Open();
+
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    return filasAfectadas > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool ExisteUsuarioPorCorreo(string correo)
+        {
+            using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+            {
+                string sentencia = "SELECT 1 FROM USUARIO WHERE CORREO = @correo";
+                SqlCommand comando = new SqlCommand(sentencia, miConexion);
+                comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@correo", correo);
+
+                miConexion.Open();
+
+                using (SqlDataReader lector = comando.ExecuteReader())
+                {
+                    // Si el lector tiene filas, significa que ya existe un usuario con ese correo
+                    return lector.HasRows;
+                }
+            }
+        }
+        public int ValidarUsuario(string correo, string contrasena)
+        {
+            try
+            {
+                using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "SELECT ID FROM USUARIO WHERE CORREO = @correo AND CONTRASENA = @contrasena";
                     SqlCommand comando = new SqlCommand(sentencia, miConexion);
                     comando.CommandType = CommandType.Text;
 
@@ -182,28 +226,24 @@ namespace CapaDatos
 
                     miConexion.Open();
 
-                    using (SqlDataReader lector = comando.ExecuteReader())
+                    var result = comando.ExecuteScalar(); // Ejecuta la consulta y obtiene el resultado (ID del usuario)
+
+                    if (result != null)
                     {
-                        if (lector.Read())
-                        {
-                            usuario = new Usuario
-                            {
-                                id = Convert.ToInt32(lector["ID"]),
-                                nombre = lector["NOMBRE"].ToString(),
-                                apellido = lector["APELLIDO"].ToString(),
-                                correo = lector["CORREO"].ToString()
-                            };
-                        }
+                        return (int)result; // Devuelve el ID del usuario si la validación fue exitosa
                     }
                 }
             }
             catch (Exception)
             {
-                // Manejar cualquier excepción o error aquí.
+                // En caso de error, puedes manejar la excepción o simplemente devolver un valor predeterminado
             }
 
-            return usuario;
+            return 0; // Devuelve 0 si la validación falla o si ocurre una excepción
         }
+
+
+
 
 
 
