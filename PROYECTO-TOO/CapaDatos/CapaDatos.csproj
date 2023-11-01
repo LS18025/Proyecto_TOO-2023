@@ -46,6 +46,7 @@
     <Compile Include="GestionProyectos.cs" />
     <Compile Include="GestionTareas.cs" />
     <Compile Include="GestionUsuarios.cs" />
+    <Compile Include="GestioObjetivos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
