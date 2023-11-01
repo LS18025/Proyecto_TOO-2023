@@ -9,7 +9,7 @@ namespace CapaEntidad
     public class Tarea
     {
         public int idTarea { get; set; }
-        public Actividad idAct{ get; set; }
+        public int idAct{ get; set; }
         public string nombreTarea { get; set; }
         public string descripcionT { get; set; }
         public DateTime fechaIniT { get; set; }
