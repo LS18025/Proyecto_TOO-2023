@@ -28,10 +28,7 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="mx-2">@Html.ActionLink("Inicio", "Index", "Home")</li>
-                <li class="mx-2">@Html.ActionLink("Acerca de", "About", "Home")</li>
-                <li class="mx-2">@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                <li class="mx-2">@Html.ActionLink("Proyectos", "VistaProyecto", "Proyecto")</li>
+                
             </ul>
             
         </div>
@@ -68,7 +65,8 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="@Url.Action("VistaObjetivo", "Proyecto")">Objetivos</a>
+                                <a class="nav-link" href="@Url.Action("VistaProyecto", "Proyecto")">Proyectos</a>
+                                <a class="nav-link" href="@Url.Action("VistaObjetivo", "Objetivo")">Objetivos</a>
                                 <a class="nav-link" href="@Url.Action("VistaActividad", "Proyecto")">Actividades</a>
                                 <a class="nav-link" href="@Url.Action("VistaTarea", "Proyecto")">Tareas</a>
                             </nav>
@@ -83,8 +81,6 @@
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                     Asignaciones
                                 </a>
-                                    
-                                
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading"></div>
@@ -93,7 +89,7 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                        Start Bootstrap
                 </div>
             </nav>
         </div>
