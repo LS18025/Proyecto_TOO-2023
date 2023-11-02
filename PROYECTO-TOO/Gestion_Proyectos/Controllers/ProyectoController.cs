@@ -66,18 +66,24 @@ namespace Gestion_Proyectos.Controllers
                 if (usuarioActual != null)
                 {
                     // Asigna el ID del usuario al proyecto
-                    
-
-                    bool insercionExitosa = gestionProyectos.newProyecto(proyecto, usuarioActual.id);
-
-                    if (insercionExitosa)
+                    if (proyecto.fechaFin >= proyecto.fechaIni)
                     {
-                        return Json(new { success = true, message = "Proyecto insertado exitosamente" });
+                        bool insercionExitosa = gestionProyectos.newProyecto(proyecto, usuarioActual.id);
+
+                        if (insercionExitosa)
+                        {
+                            return Json(new { success = true, message = "Proyecto insertado exitosamente" });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "Error al insertar el proyecto" });
+                        }
                     }
                     else
                     {
-                        return Json(new { success = false, message = "Error al insertar el proyecto" });
+                        return Json(new { success = false, message = "La fecha de finalización no puede ser anterior a la fecha de inicio" });
                     }
+                    
                 }
                 else
                 {
@@ -95,18 +101,26 @@ namespace Gestion_Proyectos.Controllers
         {
             if (ModelState.IsValid)
             {
-                GestionProyectos gestionProyectos = new GestionProyectos();
-
-                bool actualizacionExitosa = gestionProyectos.EditProyecto(proyecto);
-
-                if (actualizacionExitosa)
+                if (proyecto.fechaFin >= proyecto.fechaIni)
                 {
-                    return Json(new { success = true, message = "Proyecto actualizado exitosamente" });
+                    GestionProyectos gestionProyectos = new GestionProyectos();
+
+                    bool actualizacionExitosa = gestionProyectos.EditProyecto(proyecto);
+
+                    if (actualizacionExitosa)
+                    {
+                        return Json(new { success = true, message = "Proyecto actualizado exitosamente" });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Error al actualizar el proyecto" });
+                    }
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Error al actualizar el proyecto" });
+                    return Json(new { success = false, message = "La fecha de finalización no puede ser anterior a la fecha de inicio" });
                 }
+                
             }
             else
             {
