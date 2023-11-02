@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "VistaActividad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<head>
+    <style>
+        #tablaProyectos {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #tablaProyectos th, #tablaProyectos td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            #tablaProyectos th {
+                background-color: #f2f2f2;
+            }
+
+            #tablaProyectos tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #tablaProyectos tr:hover {
+                background-color: #ddd;
+            }
+
+            /* Alineación de los botones en cada fila */
+            #tablaProyectos .btn {
+                margin-right: 5px; /* Espacio entre botones */
+            }
+
+            /* Ajuste de z-index para que los botones no se superpongan con el contenido de la fila */
+            #tablaProyectos .show-control {
+                z-index: 2;
+            }
+    </style>
+</head>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Nueva Actividad
+</button>
+
+
+
+<!-- lo que ya tenia antes -->
+<div class="card card-success mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Nueva actividad</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+
+    <a href="@Url.Action("VistaProyecto", "Proyecto")" class="btn btn-primary">ir a proyecto</a>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-default-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+</div>
+<!-- /. respecto a modals-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva actividad</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nombreProyecto">titulo de la actividad</label>
+                            <input type="text" class="form-control" id="nombreAct" name="nombreAct" placeholder="Ingrese el nombre de la actividad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea class="form-control" id="descripcionAct" name="descripcionAct" placeholder="Ingrese una descripción de la actividad" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="proyecto">proyecto al que pertenece</label>
+                            <input type="text" class="form-control" id="proyectoAct" name="proyectoAct" placeholder="ingrese el nombre del proyecto">
+                        </div>
+
+                    </div>
+
+                    <!-- /.card-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" onclick="Guardar()">crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /.tabla del crud -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Actividades</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-3">
+        <table id="tablaActividad">
+            <thead>
+                <tr>
+
+                    <th>proyecto</th>
+                    <th>nombre</th>
+                    <th>descripcion</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<!-- /.scripts -->
+@section scripts
+    {
+    <script>
+        var tablaActividad;
+        var info;
+        function Guardar()
+        {
+            //event.preventDefault();
+            console.log("Guardar() se ejecutó");
+            // Evita la acción predeterminada del formulario (recargar la página).
+            var Activi = {
+                nombreProy: $("#proyectoAct").val(),
+                nombreAct: $("#nombreAct").val(),
+                descripcionAct: $("#descripcionAct").val()
+            }
+            console.log("despues del var Activi");
+            $.ajax(
+                {
+                    url: "@Url.Action("crearActividad", "Proyecto")",
+                    type: "POST",
+                    data: JSON.stringify(Activi), // No necesitas envolverlo en un objeto { Proyecto: proyecto }
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+                        console.log("entro al ajax");
+                        if (data.success)
+                        {
+                            console.log("paso el filtro del data.Success");
+                            $("#exampleModal").modal("hide"); // Cierra el modal
+                            tablaActividad.ajax.reload();
+                            // Aquí puedes recargar la tabla u otra actualización si es necesario.
+                        }
+                        else
+                        {
+                            alert("Error: " + data.message);
+                            console.log("hay error");
+                            // Muestra un mensaje de error
+                        }
+                    }
+                }
+            );
+        }
+    </script>
+}
+<!-- /final -->
+
+

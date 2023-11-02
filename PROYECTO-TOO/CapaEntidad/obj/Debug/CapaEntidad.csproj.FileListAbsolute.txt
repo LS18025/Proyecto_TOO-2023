@@ -4,3 +4,9 @@ F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\Capa
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.dll
 F:\PC\Documents\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.pdb
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\bin\Debug\CapaEntidad.dll
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\bin\Debug\CapaEntidad.pdb
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.csproj.AssemblyReference.cache
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.dll
+G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.pdb

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 
 namespace Gestion_Proyectos.Controllers
@@ -26,10 +27,18 @@ namespace Gestion_Proyectos.Controllers
         {
             return View();
         }
+
+        // metodo para crear una nueva actividad
+        
+        
+
+        //
         public ActionResult VistaTarea()
         {
             return View();
         }
+
+
         [HttpGet]
         public JsonResult ListarProyectos()
         {
