@@ -219,6 +219,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ObjetivoController.cs" />
     <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -619,7 +620,6 @@
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Proyecto\VistaProyecto.cshtml" />
-    <Content Include="Views\Proyecto\VistaObjetivo.cshtml" />
     <Content Include="Views\Proyecto\VistaActividad.cshtml" />
     <Content Include="Views\Proyecto\VistaTarea.cshtml" />
     <Content Include="Views\Home\VistaUsuario.cshtml" />
@@ -627,6 +627,7 @@
     <Content Include="Views\Home\UsuarioNoEncontrado.cshtml" />
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Acceso\VistaRegistro.cshtml" />
+    <Content Include="Views\Objetivo\VistaObjetivo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

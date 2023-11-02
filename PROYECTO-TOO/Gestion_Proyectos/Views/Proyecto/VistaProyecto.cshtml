@@ -152,6 +152,7 @@
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Finalización</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -267,11 +268,19 @@
                             // Botón de edición en la fila principal de datos
                             var editarBtn = '<button class="btn btn-primary btn-editar" data-idProyecto="' + row.id + '"><i class="fas fa-pen"></i></button>';
                             var borrarBtn = '<button class="btn btn-danger btn-borrar" data-idproyecto="' + row.id + '"><i class="fas fa-trash"></i></button>';
-                            
+
                             return editarBtn + borrarBtn;
                         }
                     },
-                    
+                    {
+                        "data": "idProyecto", // Asegúrate de ajustar el nombre de la propiedad que contiene el ID del proyecto
+                        "render": function (data, type, row) {
+                            var verObjetivosBtn = '<button class="btn btn-info btn-ver-objetivos" data-idProyecto="' + data + '">Objetivos</button>';
+                            return verObjetivosBtn;
+                        }
+                    },
+
+
 
                     // Agrega más columnas según tus necesidades
                 ],
@@ -279,6 +288,14 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
                 }
             });
+            $('#tablaProyectos tbody').on('click', '.btn-ver-objetivos', function () {
+                var filaSeleccionada = $(this).closest("tr");
+                info = tablaProyecto.row(filaSeleccionada).data();
+                var idProyecto = info.idProyecto;
+                // Redirige al usuario a la VistaObjetivo con el idProyecto
+                window.location.href = '@Url.Action("VistaObjetivo", "Objetivo")' + '?idProyecto=' + idProyecto;
+            });
+
 
 
             $('#tablaProyectos tbody').on('click', '.btn-editar', function () {
@@ -318,7 +335,7 @@
                     closeOnConfirm: true
                 },
                     function () {
-                        
+
                             jQuery.ajax({
                                 url: "@Url.Action("BorrarProyecto", "Proyecto")",
                                 type: "POST",
@@ -327,7 +344,7 @@
                                 contentType: "application/json; charset=utf-8",
                                 success: function (data) {
                                     if (data.success) {
-                                        
+
                                         // Recargar la tabla después de eliminar el proyecto
                                         tablaProyecto.ajax.reload();
                                     } else {
@@ -335,15 +352,15 @@
                                     }
                                 }
                             });
-                        
+
                     });
 
             });
-            
+
 
 
 
         });
-       
+
     </script>
 }
