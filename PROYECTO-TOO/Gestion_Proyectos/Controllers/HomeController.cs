@@ -38,41 +38,5 @@ namespace Gestion_Proyectos.Controllers
 
 
         }
-
-        [HttpGet]
-        public JsonResult ListarTareas()
-        {
-            List<Tarea> oLista = new List<Tarea>();
-            oLista = new CN_Tarea().Listar();
-            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult GuardarTarea(Tarea objeto)
-        {
-            object resultado;
-            string mensaje = string.Empty;
-
-            if(objeto.idTarea == 0)
-            {
-                resultado = new CN_Tarea().RegistrarTarea(objeto, out mensaje);
-            }
-            else
-            {
-                resultado = new CN_Tarea().EditarTarea(objeto, out mensaje);
-            }
-            return Json(new { resultado = resultado, mensaje = mensaje}, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult EliminarTarea(int id)
-        {
-            bool respuesta = false;
-            string mensaje = string.Empty;
-
-            respuesta = new CN_Tarea().EliminarTarea(id, out mensaje);
-
-            return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
-        }
     }
 }

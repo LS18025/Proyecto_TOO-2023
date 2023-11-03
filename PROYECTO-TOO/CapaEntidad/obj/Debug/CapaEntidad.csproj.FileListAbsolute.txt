@@ -10,3 +10,9 @@ G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.cs
 G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
 G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.dll
 G:\proyectos\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.pdb
+C:\Users\JC COMPUTER\OneDrive\Documentos\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\bin\Debug\CapaEntidad.dll
+C:\Users\JC COMPUTER\OneDrive\Documentos\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\bin\Debug\CapaEntidad.pdb
+C:\Users\JC COMPUTER\OneDrive\Documentos\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.csproj.AssemblyReference.cache
+C:\Users\JC COMPUTER\OneDrive\Documentos\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
+C:\Users\JC COMPUTER\OneDrive\Documentos\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.dll
+C:\Users\JC COMPUTER\OneDrive\Documentos\GitHub\Proyecto_TOO-2023\PROYECTO-TOO\CapaEntidad\obj\Debug\CapaEntidad.pdb

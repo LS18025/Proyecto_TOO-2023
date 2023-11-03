@@ -13,7 +13,7 @@ namespace CapaDatos
 {
     public class GestionTareas
     {
-        public List<Tarea> Listar()
+        public List<Tarea> ListarTareasPorActividad(int IDACTIVIDAD)
         {
             List<Tarea> lista = new List<Tarea>();
 
@@ -21,11 +21,11 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string query = "select IDTAREA,IDACTIVIDAD,NOMBRETAREA,DESCRIPCIONT,FECHAINIT,FECHAFINT from TAREA";
+                    string query = "select IDTAREA,NOMBRETAREA,DESCRIPCIONT,FECHAINIT,FECHAFINT from TAREA where IDACTIVIDAD = @IDACTIVIDAD";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
-
+                    cmd.Parameters.AddWithValue("@IDACTIVIDAD", IDACTIVIDAD);
                     oconexion.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -37,7 +37,6 @@ namespace CapaDatos
                                   new Tarea()
                                   {
                                       idTarea = Convert.ToInt32(dr["IDTAREA"]),
-                                      idAct = Convert.ToInt32(dr["IDACTIVIDAD"]),
                                       nombreTarea = dr["NOMBRETAREA"].ToString(),
                                       descripcionT = dr["DESCRIPCIONT"].ToString(),
                                       fechaIniT = Convert.ToDateTime(dr["FECHAINIT"]),
@@ -56,96 +55,89 @@ namespace CapaDatos
             return lista;
         }
 
-        public int RegistrarTarea(Tarea obj, out string Mensaje)
+        public bool RegistrarTarea(Tarea tarea)
         {
-            int idautogenerado = 0;
-            Mensaje = string.Empty;
             try
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    SqlCommand cmd = new SqlCommand("sp_RegistrarTarea", oconexion);
-                    cmd.Parameters.AddWithValue("IDACTIVIDAD", obj.idAct);
-                    cmd.Parameters.AddWithValue("NOMBRETAREA", obj.nombreTarea);
-                    cmd.Parameters.AddWithValue("DESCRIPCIONT", obj.descripcionT);
-                    cmd.Parameters.AddWithValue("FECHAINIT", obj.fechaIniT);
-                    cmd.Parameters.AddWithValue("FECHAFINT", obj.fechaFinT);
-                    cmd.Parameters.Add("Resultado",SqlDbType.Int).Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    oconexion.Open();
-
-                    cmd.ExecuteNonQuery();
-
-                    idautogenerado = Convert.ToInt32(cmd.Parameters["Resultado"].Value);
-                    Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                idautogenerado = 0;
-                Mensaje = ex.Message;
-            }
-            return idautogenerado;
-        }
-
-        public bool EditarTarea(Tarea obj, out string Mensaje)
-        {
-            bool resultado = false;
-            Mensaje = string.Empty;
-            try
-            {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
-                {
-                    SqlCommand cmd = new SqlCommand("sp_EditarTarea", oconexion);
-                    cmd.Parameters.AddWithValue("IDTAREA", obj.idTarea);
-                    cmd.Parameters.AddWithValue("IDACTIVIDAD", obj.idAct);
-                    cmd.Parameters.AddWithValue("NOMBRETAREA", obj.nombreTarea);
-                    cmd.Parameters.AddWithValue("DESCRIPCIONT", obj.descripcionT);
-                    cmd.Parameters.AddWithValue("FECHAINIT", obj.fechaIniT);
-                    cmd.Parameters.AddWithValue("FECHAFINT", obj.fechaFinT);
-                    cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    oconexion.Open();
-
-                    cmd.ExecuteNonQuery();
-
-                    resultado = Convert.ToBoolean(cmd.Parameters["Resultado"].Value);
-                    Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                resultado = false;
-                Mensaje = ex.Message;
-            }
-            return resultado;
-        }
-
-        public bool EliminarTarea(int id,out string Mensaje)
-        {
-            bool resultado = false;
-            Mensaje = string.Empty;
-            try
-            {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
-                {
-                    SqlCommand cmd = new SqlCommand("delete top (1) from TAREA where IDTAREA = @id", oconexion);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    string sentencia = "INSERT INTO PROYECTO (IDACTIVIDAD, NOMBRETAREA, DESCRIPCIONT, FECHAINIT, FECHAFINT) " +
+                                       "VALUES (@idAct, @nombreTarea, @descripcionT, @fechaIniT, @fechaFinT)";
+                    SqlCommand cmd = new SqlCommand(sentencia, oconexion);
                     cmd.CommandType = CommandType.Text;
+
+                    cmd.Parameters.AddWithValue("@idAct", tarea.idAct);
+                    cmd.Parameters.AddWithValue("@nombreTarea", tarea.nombreTarea);
+                    cmd.Parameters.AddWithValue("@descripcionT", tarea.descripcionT);
+                    cmd.Parameters.AddWithValue("@fechaIniT", tarea.fechaIniT);
+                    cmd.Parameters.AddWithValue("@fechaFinT", tarea.fechaFinT);
+
                     oconexion.Open();
-                    resultado = cmd.ExecuteNonQuery() > 0 ? true : false;
+
+                    int filautilizada = cmd.ExecuteNonQuery();
+
+                    return filautilizada > 0;
                 }
             }
-            catch(Exception ex)
+            catch (Exception)
             {
-                resultado = false;
-                Mensaje = ex.Message;
+                return false;
             }
-            return resultado;
+        }
+
+        public bool EditarTarea(Tarea tarea)
+        {
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "UPDATE PROYECTO SET NOMBRETAREA = @nombreTarea, DESCRIPCIONT = @descripcionT, FECHAINIT = @fechaIniT, FECHAFINT = @fechaFinT WHERE IDACTIVIDAD = @idAct";
+                    SqlCommand cmd = new SqlCommand(sentencia, oconexion);
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.Parameters.AddWithValue("@idTarea", tarea.idTarea);
+                    cmd.Parameters.AddWithValue("@nombreTarea", tarea.nombreTarea);
+                    cmd.Parameters.AddWithValue("@descripcionT", tarea.descripcionT);
+                    cmd.Parameters.AddWithValue("@fechaIniT", tarea.fechaIniT);
+                    cmd.Parameters.AddWithValue("@fechaFinT", tarea.fechaFinT);
+
+                    oconexion.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                    int filautilizada = cmd.ExecuteNonQuery();
+
+                    return filautilizada > 0;
+                }
+            }
+            catch (Exception )
+            {
+                return false;
+            }
+        }
+
+        public bool EliminarTarea(int idTarea)
+        {
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    string sentencia = "DELETE FROM PROYECTO WHERE IDTAREA = @idTarea";
+                    SqlCommand cmd = new SqlCommand(sentencia, oconexion);
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.Parameters.AddWithValue("@idTarea", idTarea);
+
+                    oconexion.Open();
+                    int filautilizada = cmd.ExecuteNonQuery();
+
+                    return filautilizada > 0;
+                }
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
     }
 }
