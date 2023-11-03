@@ -85,11 +85,11 @@ namespace Gestion_Proyectos.Controllers
         }
         //
         [HttpPost]
-        public JsonResult BorrarActividad(int idProyecto)
+        public JsonResult BorrarActividad(int idActividad)
         {
             GestionActividades gestionActividades = new GestionActividades();
 
-            bool eliminacionExitosa = gestionActividades.EliminarActividad(idProyecto);
+            bool eliminacionExitosa = gestionActividades.EliminarActividad(idActividad);
 
             if (eliminacionExitosa)
             {

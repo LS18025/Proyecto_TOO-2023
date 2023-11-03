@@ -136,8 +136,7 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -172,9 +171,8 @@
             var Actividad = {
                 nombreAct: $("#nombreAct").val(),
                 descripcionAct: $("#descripcionAct").val(),
-                idPro: {
-                    idProyecto: id
-                }
+                idProyecto: id
+                
             }
 
             $.ajax({
@@ -200,15 +198,15 @@
 
                 // Obtén los datos del formulario de edición
                 var ActividadEditada = {
-                    idObjetivo: $("#editIdActividad").val(),
-                    nombreAct: $("#nombreAct").val(),
-                    descripcionObj: $("#descripcionObj1").val(),
+                    idActividad: $("#editIdActividad").val(),
+                    nombreAct: $("#nombreAct1").val(),
+                    descripcionAct: $("#descripcionAct1").val(),
                     // Asegúrate de incluir el ID del proyecto que se está editando
 
                 };
 
                 jQuery.ajax({
-                    url: "@Url.Action("EditarActividad", "Objetivo")",
+                    url: "@Url.Action("EditarActividad", "Actividad")",
                     type: "POST",
                     data: JSON.stringify(ActividadEditada),
                     dataType: "json",
@@ -218,7 +216,7 @@
                             $("#exampleModal2").modal("hide"); // Cierra el modal de edición
                             tablaActividad.ajax.reload();
                         } else {
-                            alert("Error al actualizar el Objetivo: " + data.message);
+                            alert("Error al actualizar el Actividad: " + data.message);
                         }
                     }
                 });
@@ -234,7 +232,7 @@
 
             });
 
-            tablaObjetivo = $('#tablaActividades').DataTable({
+            tablaActividad = $('#tablaActividades').DataTable({
                 responsive: true,
                 autoWidth: false,
                 ordering: false,
@@ -248,8 +246,9 @@
                 },
                 "columns": [
 
-                    { "data": "descripcionAct", "type": "auto" },
                     { "data": "nombreAct", "type": "auto" },
+                    { "data": "descripcionAct", "type": "auto" },
+                    
 
                     {
                         "data": null,
@@ -273,7 +272,7 @@
 
             $('#tablaActividades tbody').on('click', '.btn-editar', function () {
                 var filaSeleccionada = $(this).closest("tr");
-                info = tablaObjetivo.row(filaSeleccionada).data();
+                info = tablaActividad.row(filaSeleccionada).data();
                 console.log(info);
                 //elementos ocultos
                 
@@ -310,7 +309,7 @@
                                     if (data.success) {
 
                                         // Recargar la tabla después de eliminar el proyecto
-                                        tablaObjetivo.ajax.reload();
+                                        tablaActividad.ajax.reload();
                                     } else {
                                         swal("Error", "Error al eliminar la actividad: " + data.message, "error");
                                     }

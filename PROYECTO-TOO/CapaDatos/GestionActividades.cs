@@ -62,7 +62,7 @@ namespace CapaDatos
                                        "VALUES (@idProyecto, @nombreAct, @descripcionAct)";
                     SqlCommand comando = new SqlCommand(sentencia, miConexion);
                     comando.CommandType = CommandType.Text;
-                    comando.Parameters.AddWithValue("@idProyecto", act.idProyect.idProyecto);
+                    comando.Parameters.AddWithValue("@idProyecto", act.idProyecto);
                     comando.Parameters.AddWithValue("@nombreAct", act.nombreAct);
                     comando.Parameters.AddWithValue("@descripcionAct", act.descripcionAct);
 
@@ -85,7 +85,7 @@ namespace CapaDatos
             {
                 using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "UPDATE ACTIVIDAD SET NOMBREACT = @nombreAct, DESCRIPCIONACT = @descripcionAct,  WHERE IDACTIVIDAD = @idActividad";
+                    string sentencia = "UPDATE ACTIVIDAD SET NOMBREACT = @nombreAct, DESCRIPCIONACT = @descripcionAct  WHERE IDACTIVIDAD = @idActividad";
                     SqlCommand comando = new SqlCommand(sentencia, miConexion);
                     comando.CommandType = CommandType.Text;
 
