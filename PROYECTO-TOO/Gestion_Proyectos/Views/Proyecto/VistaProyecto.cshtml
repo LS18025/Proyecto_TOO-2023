@@ -156,6 +156,7 @@
                     <th>Fecha de Finalización</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -236,6 +237,7 @@
                 });
 
         }
+
         $(document).ready(function () {
             $('#modalForm').submit(function () {
                 // Obtiene los valores de las fechas de inicio y finalización
@@ -311,6 +313,13 @@
                             return verObjetivosBtn;
                         }
                     },
+                    {
+                        "data": "idProyecto", // Asegúrate de ajustar el nombre de la propiedad que contiene el ID del proyecto
+                        "render": function (data, type, row) {
+                            var verObjetivosBtn = '<button class="btn btn-warning btn-ver-Actividades" data-idProyecto="' + data + '">Actividades</button>';
+                            return verObjetivosBtn;
+                        }
+                    },
 
 
 
@@ -328,6 +337,14 @@
                 window.location.href = '@Url.Action("VistaObjetivo", "Objetivo")' + '?idProyecto=' + idProyecto;
             });
 
+            $('#tablaProyectos tbody').on('click', '.btn-ver-Actividades', function ()
+            {
+                var filaSeleccionada = $(this).closest("tr");
+                info = tablaProyecto.row(filaSeleccionada).data();
+                var idProyecto = info.idProyecto;
+                // Redirige al usuario a la VistaObjetivo con el idProyecto
+                window.location.href = '@Url.Action("VistaActividad", "Actividad")' + '?idProyecto=' + idProyecto;
+            });
 
 
             $('#tablaProyectos tbody').on('click', '.btn-editar', function () {
@@ -345,6 +362,7 @@
                 $("#descripcion1").val(info.descripcion)
                 var fechaIni = new Date(parseInt(info.fechaIni.substr(6)));
                 var fechaFin = new Date(parseInt(info.fechaFin.substr(6)));
+
 
                 // Establece los valores de fecha en los campos del modal
                 $("#fechaIni1").val(fechaIni.toISOString().split('T')[0]);
