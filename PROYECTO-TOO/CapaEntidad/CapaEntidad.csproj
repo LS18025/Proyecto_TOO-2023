@@ -44,7 +44,6 @@
     <Compile Include="Actividad.cs" />
     <Compile Include="Asignacion_Tarea.cs" />
     <Compile Include="Objetivo.cs" />
-    <Compile Include="pivot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proyecto.cs" />
     <Compile Include="Tarea.cs" />

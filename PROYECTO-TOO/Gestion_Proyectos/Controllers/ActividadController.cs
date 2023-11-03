@@ -25,9 +25,9 @@ namespace Gestion_Proyectos.Controllers
                 // Si no se proporciona un valor para idProyecto, se generará una excepción y se redirigirá a la vista de error personalizada.
                 return RedirectToAction("Index", "Home");
             }
-            
-        }
 
+        }
+        //
         [HttpGet]
         public JsonResult ListarActividadesPorProyecto(int idProyecto)
         {
@@ -35,9 +35,9 @@ namespace Gestion_Proyectos.Controllers
             listaActividad = new GestionActividades().GetActividadesPorProyecto(idProyecto);
             return Json(new { data = listaActividad }, JsonRequestBehavior.AllowGet);
         }
-
+        //
         [HttpPost]
-        public JsonResult AgregarProyecto(Actividad Act)
+        public JsonResult AgregarActividad(Actividad Act)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +59,7 @@ namespace Gestion_Proyectos.Controllers
                 return Json(new { success = false, message = "Por favor, complete todos los campos obligatorios correctamente" });
             }
         }
+        //
         [HttpPost]
         public JsonResult EditarActividad(Actividad act)
         {
@@ -82,6 +83,7 @@ namespace Gestion_Proyectos.Controllers
                 return Json(new { success = false, message = "Por favor, complete todos los campos obligatorios correctamente" });
             }
         }
+        //
         [HttpPost]
         public JsonResult BorrarActividad(int idProyecto)
         {

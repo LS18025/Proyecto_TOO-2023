@@ -23,16 +23,13 @@ namespace Gestion_Proyectos.Controllers
         {
             return View();
         }
+
+        /*
         public ActionResult VistaActividad()
         {
             return View();
         }
-
-        // metodo para crear una nueva actividad
-        
-        
-
-        //
+        */
         public ActionResult VistaTarea()
         {
             return View();

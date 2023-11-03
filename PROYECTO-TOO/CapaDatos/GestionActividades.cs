@@ -53,6 +53,7 @@ namespace CapaDatos
 
         public bool newActividad(Actividad act)
         {
+
             try
             {
                 using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
@@ -61,7 +62,6 @@ namespace CapaDatos
                                        "VALUES (@idProyecto, @nombreAct, @descripcionAct)";
                     SqlCommand comando = new SqlCommand(sentencia, miConexion);
                     comando.CommandType = CommandType.Text;
-
                     comando.Parameters.AddWithValue("@idProyecto", act.idProyect.idProyecto);
                     comando.Parameters.AddWithValue("@nombreAct", act.nombreAct);
                     comando.Parameters.AddWithValue("@descripcionAct", act.descripcionAct);
