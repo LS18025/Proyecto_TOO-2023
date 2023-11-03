@@ -2,43 +2,398 @@
 @{
     ViewBag.Title = "VistaProyecto";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<div class="card card-primary mt-4">
-    <div class="card-header">
-        <h3 class="card-title">Nuevo Usuario</h3>
-    </div>
-    <!-- /.card-header -->
-    <!-- form start -->
-    <form method="post" action="@Url.Action("InsertarUsuario", "Proyecto")">
-        <div class="card-body">
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su Nombre...">
-            </div>
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese sus Apellidos">
-            </div>
-            <div class="form-group">
-                <label for="correo">Correo</label>
-                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo electronico">
-            </div>
-            <div class="form-group">
-                <label for="contrasena">Contraseña</label>
-                <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña">
-            </div> 
-        </div>
-        <!-- /.card-body -->
+<head>
+    <style>
+        #tablaProyectos {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            
+            #tablaProyectos th, #tablaProyectos td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            #tablaProyectos th {
+                background-color: #f2f2f2;
+            }
+
+            #tablaProyectos tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #tablaProyectos tr:hover {
+                background-color: #ddd;
+            }
+
+            /* Alineación de los botones en cada fila */
+            #tablaProyectos .btn {
+                margin-right: 5px; /* Espacio entre botones */
+            }
+
+            /* Ajuste de z-index para que los botones no se superpongan con el contenido de la fila */
+            #tablaProyectos .show-control {
+                z-index: 2;
+            }
+
+    </style>
+</head>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Nuevo Proyecto
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Proyecto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nombreProyecto">Nombre del Proyecto</label>
+                            <input type="text" class="form-control" id="nombreProyecto" name="nombreProyecto" placeholder="Ingrese el nombre del proyecto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripción del proyecto" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaIni">Fecha de Inicio</label>
+                            <input type="date" class="form-control" id="fechaIni" name="fechaIni" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha de Finalización</label>
+                            <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger" id="alerta" style="display: none;"></div>
+
+
+                    <!-- /.card-body -->
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
         </div>
-    </form>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/complementos")
-    @Scripts.Render("~/bundles/bootstrap")
-    
+    </div>
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Proyecto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm" method="post">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nombreProyecto">Nombre del Proyecto</label>
+                            <input type="text" class="form-control" id="nombreProyecto1" name="nombreProyecto" placeholder="Ingrese el nombre del proyecto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea class="form-control" id="descripcion1" name="descripcion" placeholder="Ingrese una descripción del proyecto" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaIni">Fecha de Inicio</label>
+                            <input type="date" class="form-control" id="fechaIni1" name="fechaIni" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha de Finalización</label>
+                            <input type="date" class="form-control" id="fechaFin1" name="fechaFin" required>
+                        </div>
+                        <div class="alert alert-danger" id="alerta1" style="display: none;"></div>
+                        <input type="hidden" id="editIdProyecto" value="">
+                        <input type="hidden" id="editNombreProyecto" value="">
+                        <input type="hidden" id="editDescripcion" value="">
+                        <input type="hidden" id="editFechaIni" value="">
+                        <input type="hidden" id="editFechaFin" value="">
+
+                    </div>
+
+                    <!-- /.card-body -->
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" onclick="Editar()">Guardar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Proyectos</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-3">
+        <table id="tablaProyectos">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Finalización</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+    <!-- /.card-body -->
+</div>
+
+@section scripts {
+    <script>
+        var tablaProyecto;
+        var info;
+        function Guardar() {
+            // Evita la acción predeterminada del formulario (recargar la página).
+
+            var proyecto = {
+                nombreProyecto: $("#nombreProyecto").val(),
+                descripcion: $("#descripcion").val(),
+                fechaIni: $("#fechaIni").val(),
+                fechaFin: $("#fechaFin").val(),
+            }
+
+            $.ajax({
+                url: "@Url.Action("AgregarProyecto", "Proyecto")",
+                type: "POST",
+                data: JSON.stringify(proyecto), // No necesitas envolverlo en un objeto { Proyecto: proyecto }
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o error.
+                    if (data.success) {
+                        $("#alerta").hide();
+                        $("#exampleModal").modal("hide"); // Cierra el modal
+                        tablaProyecto.ajax.reload();
+                        // Aquí puedes recargar la tabla u otra actualización si es necesario.
+                    } else {
+                        var alerta = $("#alerta");
+                        alerta.html(data.message); // Establece el mensaje del servidor en la alerta
+                        alerta.show(); // Muestra la alerta de Bootstrap con el mensaje del servidor // Muestra un mensaje de error
+                        $("#fechaFin").val("");
+                    }
+                }
+            });
+        }
+        function Editar() {
+
+                // Obtén los datos del formulario de edición
+                var proyectoEditado = {
+                    idProyecto: $("#editIdProyecto").val(),
+                    nombreProyecto: $("#nombreProyecto1").val(),
+                    descripcion: $("#descripcion1").val(),
+                    fechaIni: $("#fechaIni1").val(),
+                    fechaFin: $("#fechaFin1").val(),
+                    // Asegúrate de incluir el ID del proyecto que se está editando
+
+                };
+
+                jQuery.ajax({
+                    url: "@Url.Action("EditarProyecto", "Proyecto")",
+                    type: "POST",
+                    data: JSON.stringify(proyectoEditado),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success) {
+                            $("#alerta").hide();
+                            $("#exampleModal2").modal("hide"); // Cierra el modal de edición
+                            tablaProyecto.ajax.reload();
+                        } else {
+                            var alerta = $("#alerta1");
+                            alerta.html(data.message); // Establece el mensaje del servidor en la alerta
+                            alerta.show(); // Muestra la alerta de Bootstrap con el mensaje del servidor // Muestra un mensaje de error
+                            $("#fechaFin1").val();
+                        }
+                    }
+                });
+
+        }
+        $(document).ready(function () {
+            $('#modalForm').submit(function () {
+                // Obtiene los valores de las fechas de inicio y finalización
+                var fechaIni = new Date($('#fechaIni').val());
+                var fechaFin = new Date($('#fechaFin').val());
+                var fechaIni1 = new Date($('#fechaIni1').val());
+                var fechaFin1 = new Date($('#fechaFin1').val());
+
+                // Comprueba si la fecha de finalización es menor que la fecha de inicio
+                if (fechaFin < fechaIni) {
+                    // Muestra un mensaje de error
+                    alert('La fecha de finalización no puede ser anterior a la fecha de inicio.');
+                    // Detiene el envío del formulario
+                    return false;
+                }
+                if (fechaFin1 < fechaIni1) {
+                    // Muestra un mensaje de error
+                    alert('La fecha de finalización no puede ser anterior a la fecha de inicio.');
+                    // Detiene el envío del formulario
+                    return false;
+                }
+            });
+            $('#exampleModal').on('show.bs.modal', function () {
+                // Restablecer los campos del modal
+                $("#nombreProyecto").val("");
+                $("#descripcion").val("");
+                $("#fechaIni").val("");
+                $("#fechaFin").val("");
+                $("#alerta").hide();
+
+            });
+
+            tablaProyecto = $('#tablaProyectos').DataTable({
+                responsive: true,
+                autoWidth: false,
+                ordering: false,
+                "ajax": {
+                    url: "@Url.Action("ListarProyectos", "Proyecto")",
+                    type: "GET",
+                    dataType: "json",
+                },
+                "columns": [
+                    { "data": "nombreProyecto", "type": "auto" },
+                    { "data": "descripcion", "type": "auto" },
+                    {
+                        "data": "fechaIni",
+                        "render": function (data) {
+                            // Formatea la fecha antes de mostrarla
+                            return new Date(parseInt(data.substr(6))).toLocaleDateString();
+                        }
+                    },
+                    {
+                        "data": "fechaFin",
+                        "render": function (data) {
+                            // Formatea la fecha antes de mostrarla
+                            return new Date(parseInt(data.substr(6))).toLocaleDateString();
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            // Botón de edición en la fila principal de datos
+                            var editarBtn = '<button class="btn btn-primary btn-editar" data-idProyecto="' + row.id + '"><i class="fas fa-pen"></i></button>';
+                            var borrarBtn = '<button class="btn btn-danger btn-borrar" data-idproyecto="' + row.id + '"><i class="fas fa-trash"></i></button>';
+
+                            return editarBtn + borrarBtn;
+                        }
+                    },
+                    {
+                        "data": "idProyecto", // Asegúrate de ajustar el nombre de la propiedad que contiene el ID del proyecto
+                        "render": function (data, type, row) {
+                            var verObjetivosBtn = '<button class="btn btn-info btn-ver-objetivos" data-idProyecto="' + data + '">Objetivos</button>';
+                            return verObjetivosBtn;
+                        }
+                    },
+
+
+
+                    // Agrega más columnas según tus necesidades
+                ],
+                "language": {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+                }
+            });
+            $('#tablaProyectos tbody').on('click', '.btn-ver-objetivos', function () {
+                var filaSeleccionada = $(this).closest("tr");
+                info = tablaProyecto.row(filaSeleccionada).data();
+                var idProyecto = info.idProyecto;
+                // Redirige al usuario a la VistaObjetivo con el idProyecto
+                window.location.href = '@Url.Action("VistaObjetivo", "Objetivo")' + '?idProyecto=' + idProyecto;
+            });
+
+
+
+            $('#tablaProyectos tbody').on('click', '.btn-editar', function () {
+                var filaSeleccionada = $(this).closest("tr");
+                info = tablaProyecto.row(filaSeleccionada).data();
+                $("#alerta1").hide();
+                //elementos ocultos
+                $("#editIdProyecto").val(info.idProyecto);
+                $("#editNombreProyecto").val(info.nombreProyecto);
+                $("#editDescripcion").val(info.descripcion);
+                $("#editFechaIni").val(info.fechaIni);
+                $("#editFechaFin").val(info.fechaFin);
+
+                $("#nombreProyecto1").val(info.nombreProyecto)
+                $("#descripcion1").val(info.descripcion)
+                var fechaIni = new Date(parseInt(info.fechaIni.substr(6)));
+                var fechaFin = new Date(parseInt(info.fechaFin.substr(6)));
+
+                // Establece los valores de fecha en los campos del modal
+                $("#fechaIni1").val(fechaIni.toISOString().split('T')[0]);
+                $("#fechaFin1").val(fechaFin.toISOString().split('T')[0]);
+
+                $("#exampleModal2").modal("show");
+
+            });
+            $('#tablaProyectos').on('click', '.btn-borrar', function () {
+
+                var userSeleccionado = $(this).closest("tr");
+                var info2 = tablaProyecto.row(userSeleccionado).data();
+                swal({
+                    title: "Estas seguro?",
+                    text: "Deseas eliminar el proyecto?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Si!",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true
+                },
+                    function () {
+
+                            jQuery.ajax({
+                                url: "@Url.Action("BorrarProyecto", "Proyecto")",
+                                type: "POST",
+                                data: JSON.stringify({ idProyecto: info2.idProyecto }),
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (data) {
+                                    if (data.success) {
+
+                                        // Recargar la tabla después de eliminar el proyecto
+                                        tablaProyecto.ajax.reload();
+                                    } else {
+                                        swal("Error", "Error al eliminar el proyecto: " + data.message, "error");
+                                    }
+                                }
+                            });
+
+                    });
+
+            });
+
+
+
+
+        });
+
+    </script>
+}

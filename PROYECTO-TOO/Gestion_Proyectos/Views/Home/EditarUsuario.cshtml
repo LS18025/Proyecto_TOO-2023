@@ -1,0 +1,37 @@
+﻿@model CapaEntidad.Usuario
+
+@{
+    ViewBag.Title = "EditarUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-primary mt-4">
+    <div class="card-header">
+        <h3 class="card-title">Editar Usuario</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form method="post" action="@Url.Action("GuardarEdicionUsuario", "Home")">
+        @Html.HiddenFor(model => model.id) <!-- Campo oculto para la ID del usuario -->
+        <div class="card-body">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su Nombre..." required value="@Model.nombre">
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese sus Apellidos" required value="@Model.apellido">
+            </div>
+            <div class="form-group">
+                <label for "correo">Correo</label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo electrónico" required value="@Model.correo">
+            </div>
+        </div>
+
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>
