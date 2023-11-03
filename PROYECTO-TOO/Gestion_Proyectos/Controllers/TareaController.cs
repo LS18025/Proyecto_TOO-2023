@@ -11,16 +11,26 @@ namespace Gestion_Proyectos.Controllers
     public class TareaController : Controller
     {
         // GET: Tarea
-        public ActionResult VistaTarea()
+        public ActionResult VistaTarea(int? idActividad)
         {
-            return View();
+            if (idActividad.HasValue)
+            {
+                // Obtener objetivos relacionados con el proyecto según el idProyecto
+                List<Tarea> listaTarea = new GestionTareas().GetTareasPorActividad(idActividad.Value);
+                return View(listaTarea);
+            }
+            else
+            {
+                // Si no se proporciona un valor para idProyecto, se generará una excepción y se redirigirá a la vista de error personalizada.
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet]
         public JsonResult ListarTareasPorActividad(int IDACTIVIDAD)
         {
             List<Tarea> listaTarea = new List<Tarea>();
-            listaTarea = new GestionTareas().ListarTareasPorActividad(IDACTIVIDAD);
+            listaTarea = new GestionTareas().GetTareasPorActividad(IDACTIVIDAD);
             return Json(new { data = listaTarea }, JsonRequestBehavior.AllowGet);
         }
 

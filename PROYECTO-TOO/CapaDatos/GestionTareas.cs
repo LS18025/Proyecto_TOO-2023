@@ -13,7 +13,7 @@ namespace CapaDatos
 {
     public class GestionTareas
     {
-        public List<Tarea> ListarTareasPorActividad(int IDACTIVIDAD)
+        public List<Tarea> GetTareasPorActividad(int IDACTIVIDAD)
         {
             List<Tarea> lista = new List<Tarea>();
 
@@ -21,11 +21,11 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string query = "select IDTAREA,NOMBRETAREA,DESCRIPCIONT,FECHAINIT,FECHAFINT from TAREA where IDACTIVIDAD = @IDACTIVIDAD";
+                    string query = "SELECT IDTAREA, NOMBRETAREA, DESCRIPCIONT, FECHAINIT, FECHAFINT FROM TAREA WHERE IDACTIVIDAD = @idActividad";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue("@IDACTIVIDAD", IDACTIVIDAD);
+                    cmd.Parameters.AddWithValue("@idActividad", IDACTIVIDAD);
                     oconexion.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -61,12 +61,12 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "INSERT INTO PROYECTO (IDACTIVIDAD, NOMBRETAREA, DESCRIPCIONT, FECHAINIT, FECHAFINT) " +
+                    string sentencia = "INSERT INTO TAREA (IDACTIVIDAD, NOMBRETAREA, DESCRIPCIONT, FECHAINIT, FECHAFINT) " +
                                        "VALUES (@idAct, @nombreTarea, @descripcionT, @fechaIniT, @fechaFinT)";
                     SqlCommand cmd = new SqlCommand(sentencia, oconexion);
                     cmd.CommandType = CommandType.Text;
 
-                    cmd.Parameters.AddWithValue("@idAct", tarea.idAct);
+                    cmd.Parameters.AddWithValue("@idAct", tarea.idAct.idActividad);
                     cmd.Parameters.AddWithValue("@nombreTarea", tarea.nombreTarea);
                     cmd.Parameters.AddWithValue("@descripcionT", tarea.descripcionT);
                     cmd.Parameters.AddWithValue("@fechaIniT", tarea.fechaIniT);
@@ -91,7 +91,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "UPDATE PROYECTO SET NOMBRETAREA = @nombreTarea, DESCRIPCIONT = @descripcionT, FECHAINIT = @fechaIniT, FECHAFINT = @fechaFinT WHERE IDACTIVIDAD = @idAct";
+                    string sentencia = "UPDATE TAREA SET NOMBRETAREA = @nombreTarea, DESCRIPCIONT = @descripcionT, FECHAINIT = @fechaIniT, FECHAFINT = @fechaFinT WHERE IDTAREA = @idTarea";
                     SqlCommand cmd = new SqlCommand(sentencia, oconexion);
                     cmd.CommandType = CommandType.Text;
 
@@ -122,7 +122,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "DELETE FROM PROYECTO WHERE IDTAREA = @idTarea";
+                    string sentencia = "DELETE FROM TAREA WHERE IDTAREA = @idTarea";
                     SqlCommand cmd = new SqlCommand(sentencia, oconexion);
                     cmd.CommandType = CommandType.Text;
 

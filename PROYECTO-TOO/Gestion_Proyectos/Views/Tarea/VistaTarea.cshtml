@@ -147,7 +147,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body table-responsive p-3">
-        <table id="tablaActividades">
+        <table id="tablaTareas">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -170,7 +170,7 @@
     <script>
         var tablaTarea;
         var info;
-        var idActividad = GetURLParameter('idAct');
+        var idAct = GetURLParameter('idActividad');
         function GetURLParameter(sParam) {
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -186,13 +186,15 @@
 
         function Guardar() {
             
-            console.log(idActividad);
+            console.log(idAct);
             var tarea = {
                 nombreTarea: $("#nombreTarea").val(),
                 descripcionT: $("#descripcionT").val(),
                 fechaIniT: $("#fechaIniT").val(),
                 fechaFinT: $("#fechaFinT").val(),
-                idAct: idActividad
+                idAct: {
+                    idActividad: idAct
+                }
             }
 
             $.ajax({
@@ -238,7 +240,7 @@
                         if (data.success) {
                             $("#alerta").hide();
                             $("#exampleModal2").modal("hide"); // Cierra el modal de edición
-                            tablaProyecto.ajax.reload();
+                            tablaTarea.ajax.reload();
                         } else {
                             var alerta = $("#alerta1");
                             alerta.html(data.message); // Establece el mensaje del servidor en la alerta
@@ -282,14 +284,14 @@
 
             });
 
-            tablaTarea = $('#tablaTarea').DataTable({
+            tablaTarea = $('#tablaTareas').DataTable({
                 responsive: true,
                 autoWidth: false,
                 ordering: false,
                 "ajax": {
-                    url: "@Url.Action("ListarTareasPorActividad", "Proyecto")",
+                    url: "@Url.Action("ListarTareasPorActividad", "Tarea")" + '?idActividad=' + GetURLParameter('idActividad'),
                     data: function (data) {
-                        data = idActividad;
+                        data = idAct;
                     },
                     type: "GET",
                     dataType: "json",
@@ -353,8 +355,7 @@
                 $("#exampleModal2").modal("show");
 
             });
-            $('#tablaTarea').on('click', '.btn-borrar', function () {
-
+            $('#tablaTareas tbody').on('click', '.btn-borrar', function () {
                 var userSeleccionado = $(this).closest("tr");
                 var info2 = tablaTarea.row(userSeleccionado).data();
                 swal({

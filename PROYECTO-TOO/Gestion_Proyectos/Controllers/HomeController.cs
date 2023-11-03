@@ -5,11 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using CapaEntidad;
 using CapaDatos;
-
-
+using Gestion_Proyectos.Permisos;
 
 namespace Gestion_Proyectos.Controllers
 {
+    [ValidarSesion]
     public class HomeController : Controller
     {
         public ActionResult Index()

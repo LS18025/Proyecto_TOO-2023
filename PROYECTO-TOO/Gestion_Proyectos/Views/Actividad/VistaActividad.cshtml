@@ -136,6 +136,7 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th></th>
+                    <th></th>
                     
                 </tr>
             </thead>
@@ -172,7 +173,7 @@
                 nombreAct: $("#nombreAct").val(),
                 descripcionAct: $("#descripcionAct").val(),
                 idProyecto: id
-                
+
             }
 
             $.ajax({
@@ -223,7 +224,7 @@
 
         }
         $(document).ready(function () {
-
+            
             $('#exampleModal').on('show.bs.modal', function () {
                 // Restablecer los campos del modal
                 $("#nombreAct").val("");
@@ -248,7 +249,7 @@
 
                     { "data": "nombreAct", "type": "auto" },
                     { "data": "descripcionAct", "type": "auto" },
-                    
+
 
                     {
                         "data": null,
@@ -259,7 +260,14 @@
 
                             return editarBtn + borrarBtn;
                         }
-                    }
+                    },
+                    {
+                        "data": "idActividad", // Asegúrate de ajustar el nombre de la propiedad que contiene el ID del proyecto
+                        "render": function (data, type, row) {
+                            var verTareasBtn = '<button class="btn btn-info btn-ver-Tareas" data-idActividad="' + data + '">Tareas</button>';
+                            return verTareasBtn;
+                        }
+                    },
 
 
                     // Agrega más columnas según tus necesidades
@@ -268,6 +276,18 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
                 }
             });
+            $('#tablaActividades tbody').on('click', '.btn-ver-Tareas', function ()
+            {
+                var filaSeleccionada = $(this).closest("tr");
+                info = tablaActividad.row(filaSeleccionada).data();
+                var idProyecto = info.idProyecto;
+                var idActividad = info.idActividad;
+                console.log(idProyecto);
+                console.log(idActividad);
+                // Redirige al usuario a la VistaObjetivo con el idProyecto
+                window.location.href = '@Url.Action("VistaTarea", "Tarea")' + '?idActividad=' + idActividad;
+            });
+
 
 
             $('#tablaActividades tbody').on('click', '.btn-editar', function () {
@@ -275,7 +295,7 @@
                 info = tablaActividad.row(filaSeleccionada).data();
                 console.log(info);
                 //elementos ocultos
-                
+
                 $("#editIdActividad").val(info.idActividad);
                 $("#nombreAct1").val(info.nombreAct);
                 $("#descripcionAct1").val(info.descripcionAct)
