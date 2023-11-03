@@ -34,11 +34,11 @@ namespace Gestion_Proyectos
             }
             else if (obj.fechaIniT < DateTime.UtcNow)
             {
-                Mensaje = "La fecha de inicio de la tarea no puede quedar vacio o ser menor a este dia y debe escribirse utilizando un formato fecha con numeros y utilizando de separador los signos (/ o -)";
+                Mensaje = "La fecha de inicio de la tarea no puede quedar vacio o ser menor a este dia";
             }
             else if (obj.fechaFinT < DateTime.UtcNow)
             {
-                Mensaje = "la fecha de finalización de la tarea no puede quedar vacio o ser menor a este dia y debe escribirse utilizando un formato fecha con numeros y utilizando de separador los signos (/ o -)";
+                Mensaje = "la fecha de finalización de la tarea no puede quedar vacio o ser menor a este dia";
             }
 
             if(string.IsNullOrEmpty(Mensaje))
