@@ -93,7 +93,23 @@ namespace Gestion_Proyectos.Controllers
 
                 if (user.id != 0)
                 {
-                    Session["usuario"] = user;
+                    string sentencia = "SELECT NOMBRE, APELLIDO FROM USUARIO WHERE ID= @id";
+                    using (SqlCommand obtenerInfoUsuario = new SqlCommand(sentencia, miConexion))
+                    {
+                        obtenerInfoUsuario.Parameters.AddWithValue("@id", user.id);
+                        obtenerInfoUsuario.CommandType = CommandType.Text;
+                        
+                        SqlDataReader reader = obtenerInfoUsuario.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            Session["usuario"] = user;
+                            Session["nombre"] = reader["nombre"].ToString();
+                            Session["apellido"] = reader["apellido"].ToString();
+                            Session["correo"] = user.correo;
+                        }
+                    }
+
+
                     return RedirectToAction("Index", "Home");
                 }
                 else

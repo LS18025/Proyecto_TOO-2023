@@ -43,9 +43,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Aqui irá el username</a></li>
-                    <li><a class="dropdown-item" href="#!">Aqui irá el correo</a></li>
-                    <li><a class="dropdown-item" href="#!">Configuración</a></li>
+                    <li><a class="dropdown-item" >@Session["correo"]</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="@Url.Action("CerrarSesion", "Acceso")">Cerrar Sesión</a></li>
                 </ul>
@@ -88,8 +86,12 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="small">Bienvenido:</div>
+                    @if (Session["nombre"] != null )
+                    {
+                        <p>@Session["nombre"] @Session["apellido"]</p>
+                    }
+
                 </div>
             </nav>
         </div>
