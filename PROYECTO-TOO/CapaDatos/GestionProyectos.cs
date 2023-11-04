@@ -8,7 +8,7 @@ namespace CapaDatos
 {
     public class GestionProyectos
     {
-        public List<Proyecto> GetProyectos()
+        public List<Proyecto> GetProyectos(int usuarioId)
         {
             List<Proyecto> listaProyectos = new List<Proyecto>();
 
@@ -16,9 +16,11 @@ namespace CapaDatos
             {
                 using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "SELECT IDPROYECTO, NOMBREPROYECTO, DESCRIPCION, FECHAINI, FECHAFIN FROM PROYECTO";
+                    string sentencia = "SELECT IDPROYECTO, NOMBREPROYECTO, DESCRIPCION, FECHAINI, FECHAFIN FROM PROYECTO " +
+                                       "WHERE ID = @usuarioId"; // Filtrar por ID de usuario
                     SqlCommand comando = new SqlCommand(sentencia, miConexion);
                     comando.CommandType = CommandType.Text;
+                    comando.Parameters.AddWithValue("@usuarioId", usuarioId); // Agregar el ID del usuario
 
                     miConexion.Open();
 
@@ -48,22 +50,25 @@ namespace CapaDatos
 
             return listaProyectos;
         }
-        public bool newProyecto(Proyecto proyecto)
+
+        public bool newProyecto(Proyecto proyecto, int idUsuario)
         {
             try
             {
                 using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "INSERT INTO PROYECTO (NOMBREPROYECTO, DESCRIPCION, FECHAINI, FECHAFIN) " +
-                                       "VALUES (@nombreProyecto, @descripcion, @fechaIni, @fechaFin)";
+                    string sentencia = "INSERT INTO PROYECTO (ID, NOMBREPROYECTO, DESCRIPCION, FECHAINI, FECHAFIN) " +
+                                       "VALUES (@idUsuario, @nombreProyecto, @descripcion, @fechaIni, @fechaFin)";
                     SqlCommand comando = new SqlCommand(sentencia, miConexion);
                     comando.CommandType = CommandType.Text;
 
-                    // Asume que proyecto.idUsuario es una instancia de Usuario
+                    // Asigna el ID del usuario al proyecto en la base de datos
+                    comando.Parameters.AddWithValue("@idUsuario", idUsuario); // Agregamos el ID del usuario
                     comando.Parameters.AddWithValue("@nombreProyecto", proyecto.nombreProyecto);
                     comando.Parameters.AddWithValue("@descripcion", proyecto.descripcion);
                     comando.Parameters.AddWithValue("@fechaIni", proyecto.fechaIni);
                     comando.Parameters.AddWithValue("@fechaFin", proyecto.fechaFin);
+                    
 
                     miConexion.Open();
 
@@ -76,6 +81,7 @@ namespace CapaDatos
                 return false; // Manejo de excepciones, puedes registrar errores si es necesario.
             }
         }
+
         public bool EditProyecto(Proyecto proyecto)
         {
             try

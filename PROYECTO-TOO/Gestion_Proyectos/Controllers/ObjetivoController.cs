@@ -1,5 +1,6 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using Gestion_Proyectos.Permisos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Gestion_Proyectos.Controllers
 {
+    [ValidarSesion]
     public class ObjetivoController : Controller
     {
         // GET: Objetivo

@@ -74,7 +74,7 @@ namespace CapaDatos
             }
             catch (Exception)
             {
-                
+
                 return false;
             }
         }
@@ -130,4 +130,5 @@ namespace CapaDatos
         }
 
     }
+
 }

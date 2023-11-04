@@ -76,6 +76,8 @@
                             <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
                         </div>
                     </div>
+                    <div class="alert alert-danger" id="alerta" style="display: none;"></div>
+
 
                     <!-- /.card-body -->
 
@@ -116,6 +118,7 @@
                             <label for="fechaFin">Fecha de Finalización</label>
                             <input type="date" class="form-control" id="fechaFin1" name="fechaFin" required>
                         </div>
+                        <div class="alert alert-danger" id="alerta1" style="display: none;"></div>
                         <input type="hidden" id="editIdProyecto" value="">
                         <input type="hidden" id="editNombreProyecto" value="">
                         <input type="hidden" id="editDescripcion" value="">
@@ -187,12 +190,15 @@
                 success: function (data) {
                     // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o error.
                     if (data.success) {
-
+                        $("#alerta").hide();
                         $("#exampleModal").modal("hide"); // Cierra el modal
                         tablaProyecto.ajax.reload();
                         // Aquí puedes recargar la tabla u otra actualización si es necesario.
                     } else {
-                        alert("Error: " + data.message); // Muestra un mensaje de error
+                        var alerta = $("#alerta");
+                        alerta.html(data.message); // Establece el mensaje del servidor en la alerta
+                        alerta.show(); // Muestra la alerta de Bootstrap con el mensaje del servidor // Muestra un mensaje de error
+                        $("#fechaFin").val("");
                     }
                 }
             });
@@ -218,23 +224,48 @@
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         if (data.success) {
+                            $("#alerta").hide();
                             $("#exampleModal2").modal("hide"); // Cierra el modal de edición
                             tablaProyecto.ajax.reload();
                         } else {
-                            alert("Error al actualizar el Proyecto: " + data.message);
+                            var alerta = $("#alerta1");
+                            alerta.html(data.message); // Establece el mensaje del servidor en la alerta
+                            alerta.show(); // Muestra la alerta de Bootstrap con el mensaje del servidor // Muestra un mensaje de error
+                            $("#fechaFin1").val();
                         }
                     }
                 });
 
         }
-
         $(document).ready(function () {
+            $('#modalForm').submit(function () {
+                // Obtiene los valores de las fechas de inicio y finalización
+                var fechaIni = new Date($('#fechaIni').val());
+                var fechaFin = new Date($('#fechaFin').val());
+                var fechaIni1 = new Date($('#fechaIni1').val());
+                var fechaFin1 = new Date($('#fechaFin1').val());
+
+                // Comprueba si la fecha de finalización es menor que la fecha de inicio
+                if (fechaFin < fechaIni) {
+                    // Muestra un mensaje de error
+                    alert('La fecha de finalización no puede ser anterior a la fecha de inicio.');
+                    // Detiene el envío del formulario
+                    return false;
+                }
+                if (fechaFin1 < fechaIni1) {
+                    // Muestra un mensaje de error
+                    alert('La fecha de finalización no puede ser anterior a la fecha de inicio.');
+                    // Detiene el envío del formulario
+                    return false;
+                }
+            });
             $('#exampleModal').on('show.bs.modal', function () {
                 // Restablecer los campos del modal
                 $("#nombreProyecto").val("");
                 $("#descripcion").val("");
                 $("#fechaIni").val("");
                 $("#fechaFin").val("");
+                $("#alerta").hide();
 
             });
 
@@ -315,9 +346,11 @@
             });
 
 
+
             $('#tablaProyectos tbody').on('click', '.btn-editar', function () {
                 var filaSeleccionada = $(this).closest("tr");
                 info = tablaProyecto.row(filaSeleccionada).data();
+                $("#alerta1").hide();
                 //elementos ocultos
                 $("#editIdProyecto").val(info.idProyecto);
                 $("#editNombreProyecto").val(info.nombreProyecto);
@@ -329,7 +362,6 @@
                 $("#descripcion1").val(info.descripcion)
                 var fechaIni = new Date(parseInt(info.fechaIni.substr(6)));
                 var fechaFin = new Date(parseInt(info.fechaFin.substr(6)));
-
 
                 // Establece los valores de fecha en los campos del modal
                 $("#fechaIni1").val(fechaIni.toISOString().split('T')[0]);

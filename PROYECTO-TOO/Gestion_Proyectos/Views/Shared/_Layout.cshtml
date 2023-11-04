@@ -1,22 +1,42 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
-    
 
-    <style>.navbar-nav li a {
-        color: gray;
-        text-decoration: none;
+
+    <style>
+        .navbar-nav li a {
+            color: gray;
+            text-decoration: none;
         }
-        .navbar-nav li a:hover {
-            color: white; /* Cambia a tu color deseado al pasar el ratón */
-        }
+
+            .navbar-nav li a:hover {
+                color: white; /* Cambia a tu color deseado al pasar el ratón */
+            }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'es',
+                events: {
+                    url: '@Url.Action("ListarEventos", "Proyecto")',
+                    method: 'GET',
+                    failure: function () {
+                        // Manejar errores en la solicitud AJAX
+                    }
+                }
 
+            });
+            calendar.render();
+        });
+    </script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -43,9 +63,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Aqui irá el username</a></li>
-                    <li><a class="dropdown-item" href="#!">Aqui irá el correo</a></li>
-                    <li><a class="dropdown-item" href="#!">Configuración</a></li>
+                    <li><a class="dropdown-item" >@Session["correo"]</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="@Url.Action("CerrarSesion", "Acceso")">Cerrar Sesión</a></li>
                 </ul>
@@ -66,9 +84,7 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="@Url.Action("VistaProyecto", "Proyecto")">Proyectos</a>
-                                <a class="nav-link" href="@Url.Action("VistaObjetivo", "Objetivo")">Objetivos</a>
-                                <a class="nav-link" href="@Url.Action("VistaActividad", "Proyecto")">Actividades</a>
-                                <a class="nav-link" href="@Url.Action("VistaTarea", "Proyecto")">Tareas</a>
+                                
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -78,7 +94,7 @@
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                <a class="nav-link" href="@Url.Action("MisTareas", "Asignacion")">
                                     Asignaciones
                                 </a>
                             </nav>
@@ -88,8 +104,12 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="small">Bienvenido:</div>
+                    @if (Session["nombre"] != null )
+                    {
+                        <p>@Session["nombre"] @Session["apellido"]</p>
+                    }
+
                 </div>
             </nav>
         </div>
@@ -103,11 +123,7 @@
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Proyecto TOO-115 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
+                        
                     </div>
                 </div>
             </footer>

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Conexion.cs" />
     <Compile Include="GestionActividades.cs" />
+    <Compile Include="GestionAsignaciones.cs" />
     <Compile Include="GestionProyectos.cs" />
     <Compile Include="GestionTareas.cs" />
     <Compile Include="GestionUsuarios.cs" />
