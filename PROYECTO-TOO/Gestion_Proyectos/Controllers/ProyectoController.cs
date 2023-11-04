@@ -46,6 +46,41 @@ namespace Gestion_Proyectos.Controllers
                 return Json(new { data = new List<Proyecto>() }, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult ListarEventos()
+        {
+            if (Session["usuario"] != null)
+            {
+                Usuario usuario = (Usuario)Session["usuario"];
+                List<Proyecto> listaProyectos = ObtenerProyectosPorUsuario(usuario.id);
+
+                // Crear una lista de eventos con fechas de inicio, finalización y color
+                var eventos = listaProyectos.Select((proyecto, index) => new
+                {
+                    title = proyecto.nombreProyecto,
+                    
+                    start = proyecto.fechaIni.ToString("yyyy-MM-dd"), // Fecha de inicio
+                    end = proyecto.fechaFin.ToString("yyyy-MM-dd"), // Fecha de finalización
+                    color = ObtenerColorEvento(index) // Función para obtener colores diferentes
+                }).ToList();
+
+                return Json(eventos, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                // Si el usuario no ha iniciado sesión, retorna un JSON vacío o un mensaje de error.
+                return Json(new List<object>(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        private string[] coloresEventos = { "#FF5733", "#5F9EA0", "#5733FF", "#E9967A", "#33B3FF" }; // Lista de colores
+
+        private string ObtenerColorEvento(int index)
+        {
+            // Asigna colores de manera cíclica a los eventos
+            return coloresEventos[index % coloresEventos.Length];
+        }
+
+
 
         private List<Proyecto> ObtenerProyectosPorUsuario(int usuarioId)
         {

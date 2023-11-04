@@ -1,22 +1,42 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
-    
 
-    <style>.navbar-nav li a {
-        color: gray;
-        text-decoration: none;
+
+    <style>
+        .navbar-nav li a {
+            color: gray;
+            text-decoration: none;
         }
-        .navbar-nav li a:hover {
-            color: white; /* Cambia a tu color deseado al pasar el ratón */
-        }
+
+            .navbar-nav li a:hover {
+                color: white; /* Cambia a tu color deseado al pasar el ratón */
+            }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'es',
+                events: {
+                    url: '@Url.Action("ListarEventos", "Proyecto")',
+                    method: 'GET',
+                    failure: function () {
+                        // Manejar errores en la solicitud AJAX
+                    }
+                }
 
+            });
+            calendar.render();
+        });
+    </script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">

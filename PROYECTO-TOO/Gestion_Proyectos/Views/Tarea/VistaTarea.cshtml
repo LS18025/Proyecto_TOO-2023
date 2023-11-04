@@ -510,6 +510,10 @@
             $('#tablaTareas tbody').on('click', '.btn-asignar', function () {
                 var filaSeleccionada = $(this).closest("tr");
                 info = tablaTarea.row(filaSeleccionada).data();
+                $("#nombreUsuario").text("");
+                $("#apellidoUsuario").text("");
+                $("#correoEncontrado").text("");
+                $("#datosUsuario").hide();
                 $("#alerta1").hide();
                 $("#mensajeError").hide();
                 $("#correoUsuario").val("");
