@@ -64,9 +64,7 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="@Url.Action("VistaProyecto", "Proyecto")">Proyectos</a>
-                                <a class="nav-link" href="@Url.Action("VistaObjetivo", "Objetivo")">Objetivos</a>
-                                <a class="nav-link" href="@Url.Action("VistaActividad", "Proyecto")">Actividades</a>
-                                <a class="nav-link" href="@Url.Action("VistaTarea", "Proyecto")">Tareas</a>
+                                
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -76,7 +74,7 @@
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                <a class="nav-link" href="@Url.Action("MisTareas", "Asignacion")">
                                     Asignaciones
                                 </a>
                             </nav>
@@ -105,11 +103,7 @@
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Proyecto TOO-115 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
+                        
                     </div>
                 </div>
             </footer>

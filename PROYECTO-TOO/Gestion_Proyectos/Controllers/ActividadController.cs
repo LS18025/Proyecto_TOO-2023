@@ -1,5 +1,6 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using Gestion_Proyectos.Permisos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Gestion_Proyectos.Controllers
 {
     public class ActividadController : Controller
     {
+        [ValidarSesion]
         // GET: Actividad
         public ActionResult VistaActividad(int? idProyecto)
 

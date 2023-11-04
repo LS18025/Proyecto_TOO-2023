@@ -63,7 +63,7 @@ namespace CapaDatos
                 return false;
             }
         }
-        public Usuario ObtenerUsuarioPorID(int id)
+        public Usuario ObtenerUsuarioPorCorreo(string correo)
         {
             Usuario usuario = null;
 
@@ -71,11 +71,11 @@ namespace CapaDatos
             {
                 using (SqlConnection miConexion = new SqlConnection(Conexion.cn))
                 {
-                    string sentencia = "SELECT ID, NOMBRE, APELLIDO, CORREO FROM USUARIO WHERE ID = @id";
+                    string sentencia = "SELECT ID, NOMBRE, APELLIDO, CORREO FROM USUARIO WHERE CORREO = @correo";
                     SqlCommand comando = new SqlCommand(sentencia, miConexion);
                     comando.CommandType = CommandType.Text;
 
-                    comando.Parameters.AddWithValue("@id", id);
+                    comando.Parameters.AddWithValue("@correo", correo);
 
                     miConexion.Open();
 

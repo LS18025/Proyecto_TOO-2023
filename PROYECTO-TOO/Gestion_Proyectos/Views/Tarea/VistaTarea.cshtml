@@ -139,6 +139,45 @@
         </div>
     </div>
 </div>
+<!-- Agregar este modal en tu vista -->
+<div class="modal fade" id="asignacionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar Tarea</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="asignacionForm">
+
+                    <div class="form-group">
+                        <label for="correoUsuario">Correo Electrónico del Usuario</label>
+                        <input class="form-control" id="correoUsuario" name="correoUsuario" placeholder="Ingrese el correo del usuario" required></input>
+                        <input type="hidden" id="asigIdTarea" value="">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="BuscarUsuario()">Buscar</button>
+
+                    <!-- Agregar un div para mostrar los datos del usuario encontrado -->
+                    <div id="datosUsuario" style="display: none;">
+                        <h5></h5>
+                        <h5>Datos del Usuario:</h5>
+                        <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
+                        <p><strong>Apellido:</strong> <span id="apellidoUsuario"></span></p>
+                        <p><strong>Correo Electrónico:</strong> <span id="correoEncontrado"></span></p>
+                    </div>
+
+                </form>
+                <div id="mensajeError" class="alert alert-danger m-2" style="display: none;"></div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnAsignar" class="btn btn-primary" onclick="AsignarTarea()" disabled>Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <div class="card mt-4">
@@ -154,6 +193,7 @@
                     <th>Descripción</th>
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Finalización</th>
+                    <th></th>
                     <th></th>
 
                 </tr>
@@ -182,6 +222,72 @@
                 }
             }
             return null;
+        }
+        function BuscarUsuario() {
+
+            var correo = $("#correoUsuario").val();
+            $("#mensajeError").hide();
+            console.log(correo);
+            // Realiza una solicitud AJAX para buscar el usuario por correo electrónico
+            $.ajax({
+                url: "@Url.Action("BuscarUsuarioPorCorreo", "Asignacion")",
+                type: "POST",
+                data: JSON.stringify({ correoUsuario: correo }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.success) {
+                        // Usuario encontrado, muestra sus datos en el modal
+                        $("#nombreUsuario").text(data.nombre);
+                        $("#apellidoUsuario").text(data.apellido);
+                        $("#correoEncontrado").text(data.correo);
+                        $("#datosUsuario").show();
+                        $("#mensajeError").hide();
+                        $("#btnAsignar").prop("disabled", false);
+                    } else {
+                        // Usuario no encontrado, muestra un mensaje de error
+                        $("#datosUsuario").hide();
+
+                        $("#mensajeError").text("Usuario no encontrado.");
+                        $("#mensajeError").show("Usuario no encontrado.");
+
+                        // Deshabilita el botón "Asignar" ya que no se ha encontrado un usuario válido
+                        $("#btnAsignar").prop("disabled", true);
+                    }
+                }
+            });
+        }
+        function AsignarTarea() {
+            // Obtener los datos necesarios para la asignación, como el ID de la tarea y el ID del usuario
+
+            var tareaId = $("#asigIdTarea").val();// Suponiendo que info contiene el ID de la tarea
+            var correo = $("#correoUsuario").val(); // Obtén el correo del usuario encontrado
+            $("#mensajeError").hide();
+            // Realizar una solicitud AJAX para asignar la tarea
+            $.ajax({
+                url: "@Url.Action("AsignarTarea", "Asignacion")",
+                type: "POST",
+                data: JSON.stringify({ idTarea: tareaId, usuarioCorreo: correo }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.success) {
+                        // Tarea asignada con éxito, puedes realizar acciones adicionales si es necesario
+                        console.log("Tarea asignada con éxito");
+                        $("#datosUsuario").hide();
+                        $("#correoUsuario").val("");
+                        $("#btnAsignar").prop("disabled", true);
+                        $("#mensajeError").hide();
+                        // Cerrar el modal de asignación
+                        $("#asignacionModal").modal("hide");
+                    } else {
+                        // Ocurrió un error durante la asignación, muestra un mensaje de error
+                        $("#mensajeError").text(data.message);
+                        $("#mensajeError").show();
+                        // Puedes mostrar un mensaje de error al usuario si es necesario
+                    }
+                }
+            });
         }
 
         function Guardar() {
@@ -323,6 +429,16 @@
                             return editarBtn + borrarBtn;
                         }
                     },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            // Botón de edición en la fila principal de datos
+                            var asignarBtn = '<button class="btn btn-info btn-asignar" data-idTarea="' + row.idTarea + '">Asignar</button>';
+
+
+                            return asignarBtn;
+                        }
+                    },
 
                     // Agrega más columnas según tus necesidades
                 ],
@@ -330,6 +446,7 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
                 }
             });
+            
 
             $('#tablaTareas tbody').on('click', '.btn-editar', function () {
                 var filaSeleccionada = $(this).closest("tr");
@@ -370,31 +487,42 @@
                 },
                     function () {
 
-                            jQuery.ajax({
-                                url: "@Url.Action("EliminarTarea", "Tarea")",
-                                type: "POST",
-                                data: JSON.stringify({ idTarea: info2.idTarea }),
-                                dataType: "json",
-                                contentType: "application/json; charset=utf-8",
-                                success: function (data) {
-                                    if (data.success) {
+                        jQuery.ajax({
+                            url: "@Url.Action("EliminarTarea", "Tarea")",
+                            type: "POST",
+                            data: JSON.stringify({ idTarea: info2.idTarea }),
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                if (data.success) {
 
-                                        // Recargar la tabla después de eliminar el proyecto
-                                        tablaTarea.ajax.reload();
-                                    } else {
-                                        swal("Error", "Error al eliminar la tarea: " + data.message, "error");
-                                    }
+                                    // Recargar la tabla después de eliminar el proyecto
+                                    tablaTarea.ajax.reload();
+                                } else {
+                                    swal("Error", "Error al eliminar la tarea: " + data.message, "error");
                                 }
-                            });
+                            }
+                        });
 
                     });
 
             });
+            $('#tablaTareas tbody').on('click', '.btn-asignar', function () {
+                var filaSeleccionada = $(this).closest("tr");
+                info = tablaTarea.row(filaSeleccionada).data();
+                $("#alerta1").hide();
+                $("#mensajeError").hide();
+                $("#correoUsuario").val("");
+                //elementos ocultos
+                console.log(info.idTarea);
+                $("#asigIdTarea").val(info.idTarea);
 
 
-
+                $("#asignacionModal").modal("show");
+            });
 
         });
+
 
     </script>
 }
